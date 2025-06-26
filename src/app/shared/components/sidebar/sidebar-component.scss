@@ -1,0 +1,118 @@
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #007bff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  padding-bottom: 30px; // Aumenta o espaço na parte inferior
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+
+  &.no-shadow {
+    box-shadow: none;
+  }
+}
+
+.sidebar-header {
+  margin-bottom: 20px;
+  text-align: center;
+
+  .logo-prosul {
+    width: 120px; // Ajuste conforme o tamanho desejado
+    height: auto; // Mantém a proporção
+    margin-bottom: 0; // Espaço entre a logo e o texto CREA
+  }
+  h2 {
+    font-size: 1.5rem;
+    color: white;
+    font-style: italic;
+  }
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; // Garante que a lista empurre o perfil para baixo
+}
+
+.nav-item {
+  margin-bottom: 10px;
+
+  a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    border-radius: 15px;
+    transition: background-color 0.3s, margin-right 0.3s, padding-right 0.3s;
+    position: relative;
+
+    &:hover {
+      background-color: #f4f4f4;
+      color: #333;
+      font-weight: bold;
+      border-radius: 15px;
+      margin-right: -20px;
+      padding-right: 30px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 20px;
+        background-color: #f4f4f4;
+      }
+    }
+
+    &.active {
+      background-color: #f4f4f4;
+      color: #333;
+      font-weight: bold;
+      border-radius: 15px;
+      margin-right: -20px;
+      padding-right: 30px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 20px;
+        background-color: #f4f4f4;
+      }
+    }
+  }
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px; // Adiciona espaço abaixo do perfil
+  padding: 10px;
+  background-color: #007bff;
+  border-radius: 8px;
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid #ddd;
+}
+
+.user-name {
+  font-size: 1rem;
+  color: white;
+  font-weight: 500;
+}

@@ -1,0 +1,17 @@
+<nav class="sidebar" [ngClass]="{'no-shadow': hasActiveItem}">
+  <div class="sidebar-header">
+    <img src="/logo.png" alt="Logo Prosul" class="logo-prosul">
+    <h2>CREA</h2>
+  </div>
+  <ul class="nav-list">
+    <li *ngFor="let item of navItems" class="nav-item">
+      <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" aria-current="page">
+        {{ item.label }}
+      </a>
+    </li>
+  </ul>
+  <div class="user-profile">
+    <img [src]="'/users/user.png'" alt="Foto" class="profile-image">
+    <span class="user-name">{{ user?.name || 'Usuário' }}</span>
+  </div>
+</nav>

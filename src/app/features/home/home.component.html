@@ -1,0 +1,25 @@
+<div class="table-container">
+  <h2>Dados de Equipe Técnica</h2>
+  <table class="professional-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Especialidade</th>
+        <th>Número de Registro</th>
+        <th>E-mail</th>
+        <th>Telefone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let professional of professionals">
+        <td>{{ professional.id || '-' }}</td>
+        <td>{{ professional.name }}</td>
+        <td>{{ professional.specialty }}</td>
+        <td>{{ professional.registrationNumber }}</td>
+        <td>{{ professional.email }}</td>
+        <td>{{ professional.phone || '-' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
