@@ -1,5 +1,7 @@
 <main class="main">
-  <app-sidebar></app-sidebar>
+  @if (isAuthenticated && !isLoginRoute) {
+    <app-sidebar></app-sidebar>
+  }
   <div class="content">
     <router-outlet />
   </div>

@@ -4,8 +4,8 @@ import { ProfessionalService } from '../../core/services/professional.service';
 import { Professional } from '../../core/models/professional.model';
 import { TechnicalService } from '../../core/models/technical-service.model';
 import { FormsModule } from '@angular/forms';
-import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { FormBuilder, FormArray } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select'; // Importe o módulo do ng-select
 
 interface Activity {
   id: number;
@@ -16,8 +16,8 @@ interface Activity {
 interface Selection {
   professional: Professional | null;
   activity: Activity | null;
-  technicalServiceIds: number[]; // ✅ array de IDs
-  quantity: number | null;
+  technicalServiceIds: number[] | null; // Ajustado para array de IDs
+  quantity: number | null; // Inicializado como number ou null
   unit: string | null;
   description: string | null;
 }
@@ -25,23 +25,21 @@ interface Selection {
 @Component({
   selector: 'app-professional-search',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgSelectModule], // ReactiveFormsModule não é necessário para standalone com FormBuilder
+  imports: [CommonModule, FormsModule, NgSelectModule], // Adicione NgSelectModule
   templateUrl: './professional-search.component.html',
   styleUrls: ['./professional-search.component.scss'],
 })
 export class ProfessionalSearchComponent implements OnInit {
   professionals: Professional[] = [];
-  selectedProfessionals: Selection[] = []; // Inicialização vazia
+  selectedProfessionals: Selection[] = [];
   activities: Activity[] = [];
   technicalServices: TechnicalService[] = [];
   maxSelections: number = 6;
 
-  constructor(private fb: FormBuilder, private professionalService: ProfessionalService) {
-    // Construtor vazio, dependências injetadas
-  }
+  constructor(private fb: FormBuilder, private professionalService: ProfessionalService) {}
 
   ngOnInit() {
-    this.selectedProfessionals = [this.createEmptySelection()]; // Inicialização no ngOnInit
+    this.selectedProfessionals = [this.createEmptySelection()];
     this.loadProfessionals();
     this.loadActivities();
     this.loadTechnicalServices();
@@ -70,8 +68,8 @@ export class ProfessionalSearchComponent implements OnInit {
     return {
       professional: null,
       activity: null,
-      technicalServiceIds: [], // ✅ aqui também
-      quantity: null,
+      technicalServiceIds: [], // Inicializado como array vazio
+      quantity: null, // Inicializado como null
       unit: null,
       description: null,
     };
@@ -93,14 +91,9 @@ export class ProfessionalSearchComponent implements OnInit {
   }
 
   getTechnicalServiceCodes(selection: Selection): string {
-    return (
-      selection.technicalServiceIds
-        ?.map(id => {
-          const service = this.technicalServices.find(ts => ts.id === id);
-          return service?.code || 'Sem código';
-        })
-        .join(', ') || ''
-    );
+    if (!selection.technicalServiceIds || !this.technicalServices) return '';
+    const services = this.technicalServices.filter(ts => selection.technicalServiceIds!.includes(ts.id));
+    return services.map(service => service.code || 'Sem código').join(', ') || '';
   }
 
   addProfessionalSelection() {

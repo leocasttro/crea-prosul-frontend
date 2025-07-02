@@ -1,0 +1,36 @@
+<form (ngSubmit)="login()" #loginForm="ngForm">
+  <div>
+    <label for="username">Usuário</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      [(ngModel)]="username"
+      placeholder="Digite seu usuário"
+      required
+      #usernameInput="ngModel"
+    />
+    @if (usernameInput.invalid && usernameInput.touched) {
+      <div style="color: red;">O usuário é obrigatório</div>
+    }
+  </div>
+  <div>
+    <label for="password">Senha</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      [(ngModel)]="password"
+      placeholder="Digite sua senha"
+      required
+      #passwordInput="ngModel"
+    />
+    @if (passwordInput.invalid && passwordInput.touched) {
+      <div style="color: red;">A senha é obrigatória</div>
+    }
+  </div>
+  <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+  @if (error) {
+    <div style="color: red;">{{ error }}</div>
+  }
+</form>

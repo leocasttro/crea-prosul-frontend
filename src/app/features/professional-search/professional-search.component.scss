@@ -63,23 +63,13 @@ h2 {
 
   select,
   input {
-    padding: 10px;
+    padding: 8px;
     font-size: 1rem;
     border: 1px solid #c9c9c9;
     border-radius: 4px;
-    background-color: #fff;
+    background-color: hsl(0, 0%, 100%);
     width: 100%;
     box-sizing: border-box;
-  }
-
-  input[type="number"] {
-    -moz-appearance: textfield; /* Remove as setas no Firefox */
-  }
-
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none; /* Remove as setas no Chrome/Safari */
-    margin: 0;
   }
 
   &.code-display {
@@ -89,7 +79,7 @@ h2 {
       font-size: 1rem;
       font-weight: 600;
       color: #007bff;
-      padding: 10px;
+      padding: 8px;
       background-color: #e9f7fe;
       border: 1px solid #a8d7f7;
       border-radius: 4px;

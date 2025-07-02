@@ -15,10 +15,10 @@
       <tr *ngFor="let professional of professionals">
         <td>{{ professional.id || '-' }}</td>
         <td>{{ professional.name }}</td>
-        <td>{{ professional.specialty }}</td>
+        <td>{{ professional.formation }}</td>
         <td>{{ professional.registrationNumber }}</td>
-        <td>{{ professional.email }}</td>
-        <td>{{ professional.phone || '-' }}</td>
+        <td>{{ professional.contactEmail }}</td>
+        <td>{{ professional.phoneNumber || '-' }}</td>
       </tr>
     </tbody>
   </table>

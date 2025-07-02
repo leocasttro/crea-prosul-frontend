@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Professional } from '../models/professional.model';
+import { environment } from '../../../environments/environment';
 
 interface Activity {
   id: number;
@@ -12,13 +13,14 @@ interface Activity {
 interface TechnicalService {
   id: number;
   name: string;
+  code: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfessionalService {
-  private apiUrl = 'http://localhost:3000/professionals';
+  private apiUrl = `${environment.apiUrl}/professionals/getAllProfessionals`;
 
   constructor(private http: HttpClient) {}
 
@@ -27,28 +29,14 @@ export class ProfessionalService {
   }
 
   search(): Observable<Professional[]> {
-    // Enquanto não existe API, manter comentado
-    // return this.http.get<Professional[]>(this.apiUrl);
-    return of([
-      { id: 1, name: 'João Silva', specialty: 'Engenharia Civil', registrationNumber: '12345', email: 'joao@exemplo.com' },
-      { id: 2, name: 'Maria Souza', specialty: 'Engenharia Elétrica', registrationNumber: '67890', email: 'maria@exemplo.com' },
-    ]);
+    return this.http.get<Professional[]>(this.apiUrl);
   }
 
   getActivities(): Observable<Activity[]> {
-    return of([
-      { id: 1, name: 'Projeto Estrutural', code: 'PE-001' },
-      { id: 2, name: 'Consultoria', code: 'CO-002' },
-      { id: 3, name: 'Fiscalização', code: 'FI-003' },
-    ]);
+    return this.http.get<Activity[]>(`${environment.apiUrl}/activities`);
   }
 
-getTechnicalServices(): Observable<TechnicalService[]> {
-    // Retorna dados compatíveis com a interface TechnicalService
-    return of([
-      { id: 1, name: 'Serviço Técnico A', code: 'STA001' },
-      { id: 2, name: 'Serviço Técnico B', code: 'STB002' },
-      { id: 3, name: 'Serviço Técnico C', code: 'STC003' },
-    ]);
+  getTechnicalServices(): Observable<TechnicalService[]> {
+    return this.http.get<TechnicalService[]>(`${environment.apiUrl}/technical-services`);
   }
 }

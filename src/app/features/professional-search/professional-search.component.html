@@ -58,18 +58,21 @@
           id="quantity-{{ i }}"
           [(ngModel)]="selection.quantity"
           min="1"
+          step="1"
           placeholder="Digite a quantidade"
         />
       </div>
 
       <div class="form-group" *ngIf="selection.activity">
         <label for="unit-{{ i }}">Unidade de Medida</label>
-        <input
-          type="text"
-          id="unit-{{ i }}"
-          [(ngModel)]="selection.unit"
-          placeholder="Digite a unidade de medida"
-        />
+        <ng-select
+          [items]="technicalServices"
+          bindLabel="name"
+          bindValue="id"
+          [multiple]="true"
+          [(ngModel)]="selection.technicalServiceIds"
+          placeholder="Selecione os serviços técnicos">
+        </ng-select>
       </div>
 
       <div class="form-group" *ngIf="selection.activity">

@@ -11,7 +11,18 @@
     </li>
   </ul>
   <div class="user-profile">
-    <img [src]="'/users/user.png'" alt="Foto" class="profile-image">
-    <span class="user-name">{{ user?.name || 'Usuário' }}</span>
+    @if (user) {
+      <img [src]="'/users/user.png'" alt="Foto de perfil" class="profile-image">
+      <span class="user-name">{{ user.username || 'Usuário' }}</span>
+      @if (user.roles && user.roles.length > 0) {
+        <p>Papéis: {{ user.roles.join(', ') }}</p>
+      } @else {
+        <p>Papéis: Nenhum</p>
+      }
+      <button (click)="logout()">Sair</button>
+    } @else {
+      <p>Usuário não autenticado</p>
+      <a [routerLink]="['/login']">Fazer login</a>
+    }
   </div>
 </nav>
