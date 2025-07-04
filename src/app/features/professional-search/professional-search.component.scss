@@ -1,4 +1,5 @@
-.search-container{
+// Manter inalterado
+.search-container {
   padding: 20px;
   margin-left: 300px;
   width: 80%;
@@ -20,29 +21,54 @@ h2 {
   text-align: center;
 }
 
+// Ajustar para grid
 .selection-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 20px;
   margin-bottom: 20px;
 }
 
 .selection-row {
-  display: flex;
-  align-items: flex-end;
+  display: grid;
+  grid-template-rows: auto auto; /* Duas linhas: Profissional/Serviço/Código, Atividades/Quantidade/Unidade/Botão */
   gap: 15px;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: background-color 0.3s ease;
+
+  &.even-row {
+    background-color: #ffffff;
+  }
+
+  &.odd-row {
+    background-color: #f9f9f9;
+  }
 }
 
-.selection-row.even-row {
-  background-color: #ffffff;
+.grid-container {
+  display: contents; /* Permite que os filhos .grid-row herdem o grid pai */
 }
 
-.selection-row.odd-row {
-  background-color: #f9f9f9;
+// Primeira linha (Profissional, Serviço Técnico, Código)
+.grid-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Três colunas para a primeira linha */
+  gap: 15px;
+  align-items: flex-end;
+}
+
+// Segunda linha (Atividades, Códigos, Quantidade, Unidade, Botão)
+.grid-row.full-width {
+  display: grid;
+  grid-template-columns: 45% 15% 10% 15% 15%; /* Cinco colunas: Atividades, Códigos, Quantidade, Unidade, Botão */
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.grid-item {
+  margin: 5px 0;
 }
 
 .form-group {
@@ -74,7 +100,7 @@ h2 {
     border: 1px solid #c9c9c9;
     border-radius: 4px;
     background-color: hsl(0, 0%, 100%);
-    width: 100%;
+    width: 100%; /* Mantém 100% dentro da célula do grid */
     box-sizing: border-box;
   }
 
@@ -93,18 +119,29 @@ h2 {
       box-sizing: border-box;
     }
   }
+
+  &.activities {
+    // Ocupa automaticamente 45% devido ao grid-template-columns
+  }
+
+  &.activity-codes,
+  &.quantity {
+    // Ocupa automaticamente 15% e 10% devido ao grid-template-columns
+  }
 }
 
 .remove-btn {
   padding: 8px 12px;
   font-size: 1.2rem;
+  width: 45%;
   color: #fff;
   background-color: #dc3545;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   align-self: flex-end;
-  margin-left: 10px;
+  margin-left: 0; /* Removido margin-left para melhor alinhamento */
+  justify-self: center; /* Centraliza na célula */
 
   &:hover {
     background-color: #c82333;
@@ -121,10 +158,14 @@ h2 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin: 20px auto 0 auto;
+  margin: 20px auto 0 auto; /* Mantém centralizado */
   transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #218838;
   }
+}
+
+.button-container {
+  text-align: center;
 }

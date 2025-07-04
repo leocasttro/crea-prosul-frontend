@@ -9,110 +9,91 @@
         [class.even-row]="i % 2 === 0"
         [class.odd-row]="i % 2 !== 0"
       >
-        <!-- 1. Profissional -->
-        <div class="form-group">
-          <label for="professional-{{ i }}">Profissional {{ i + 1 }}</label>
-          <ng-select
-            [items]="professionals"
-            bindLabel="name"
-            [(ngModel)]="selection.professional"
-            placeholder="Selecione um profissional"
-            (ngModelChange)="onProfessionalChange(selection)">
-          </ng-select>
+        <div class="grid-container">
+          <!-- Linha 1: Três colunas (Profissional, Serviço Técnico, Código) -->
+          <div class="grid-row">
+            <div class="form-group grid-item">
+              <label for="professional-{{ i }}">Profissional {{ i + 1 }}</label>
+              <ng-select
+                [items]="professionals"
+                bindLabel="name"
+                [(ngModel)]="selection.professional"
+                placeholder="Selecione um profissional"
+                (ngModelChange)="onProfessionalChange(selection)"
+              ></ng-select>
+            </div>
+            <div class="form-group grid-item" *ngIf="selection.professional">
+              <label for="service-{{ i }}">Serviço Técnico</label>
+              <ng-select
+                [items]="selection.technicalServices"
+                bindLabel="nomeServicoTecnico"
+                bindValue="codigoServicoTecnico"
+                [(ngModel)]="selection.service"
+                (ngModelChange)="onServiceChange(selection)"
+              ></ng-select>
+            </div>
+            <div class="form-group code-display grid-item" *ngIf="selection.service">
+              <label>Código do Serviço Técnico</label>
+              <span>{{ selection.service }}</span>
+            </div>
+          </div>
+
+          <!-- Linha 2: Seções expansivas (Atividades, Códigos, Quantidade, Unidade, Botão) -->
+          <div class="grid-row full-width">
+            <div class="form-group grid-item activities" *ngIf="selection.service">
+              <label for="activity-{{ i }}">Atividades</label>
+              <ng-select
+                [items]="selection.activities"
+                bindLabel="name"
+                bindValue="id"
+                [multiple]="true"
+                [(ngModel)]="selection.activityIds"
+                placeholder="Selecione atividades"
+              ></ng-select>
+            </div>
+            <div class="form-group code-display grid-item activity-codes" *ngIf="selection.activityIds?.length">
+              <label>Códigos das Atividades</label>
+              <span>{{ getActivityCodes(selection) }}</span>
+            </div>
+            <div class="form-group grid-item quantity" *ngIf="selection.activityIds?.length">
+              <label for="quantity-{{ i }}">Quantidade</label>
+              <input
+                type="number"
+                id="quantity-{{ i }}"
+                [(ngModel)]="selection.quantity"
+                min="1"
+                step="1"
+                placeholder="Digite a quantidade"
+              />
+            </div>
+            <div class="form-group grid-item" *ngIf="selection.activityIds?.length">
+              <label for="unit-{{ i }}">Unidade de Medida</label>
+              <input
+                type="text"
+                id="unit-{{ i }}"
+                [(ngModel)]="selection.unit"
+                placeholder="Digite a unidade de medida"
+              />
+            </div>
+            <button
+              class="remove-btn grid-item"
+              (click)="removeSelection(i)"
+              *ngIf="selection.service"
+              title="Remover seleção"
+            >
+              ×
+            </button>
+          </div>
         </div>
-
-        <!-- 2. Serviço Técnico (baseado no profissional) -->
-        <div class="form-group" *ngIf="selection.professional">
-          <label for="service-{{ i }}">Serviço Técnico</label>
-          <ng-select
-            [items]="selection.technicalServices"
-            bindLabel="nomeServicoTecnico"
-            bindValue="codigoServicoTecnico"
-            [(ngModel)]="selection.service"
-            (ngModelChange)="onServiceChange(selection)">
-          </ng-select>
+        <div class="button-container">
+          <button
+            class="add-professional-btn"
+            (click)="addProfessionalSelection()"
+          >
+            + Adicionar Profissional
+          </button>
         </div>
-
-        <!-- 3. Código do Serviço Técnico -->
-        <div class="form-group code-display" *ngIf="selection.service">
-          <label>Código do Serviço Técnico</label>
-          <span>{{ selection.service }}</span>
-        </div>
-
-
-        <!-- 4. Atividades (baseadas no serviço técnico) -->
-        <div class="form-group" *ngIf="selection.service">
-          <label for="activity-{{ i }}">Atividades</label>
-          <ng-select
-            [items]="selection.activities"
-            bindLabel="name"
-            bindValue="id"
-            [multiple]="true"
-            [(ngModel)]="selection.activityIds"
-            placeholder="Selecione atividades">
-          </ng-select>
-        </div>
-
-        <!-- 5. Códigos das Atividades -->
-        <div class="form-group code-display" *ngIf="selection.activityIds?.length">
-          <label>Códigos das Atividades</label>
-          <span>{{ getActivityCodes(selection) }}</span>
-        </div>
-
-        <!-- 6. Quantidade -->
-        <div class="form-group" *ngIf="selection.activityIds?.length">
-          <label for="quantity-{{ i }}">Quantidade</label>
-          <input
-            type="number"
-            id="quantity-{{ i }}"
-            [(ngModel)]="selection.quantity"
-            min="1"
-            step="1"
-            placeholder="Digite a quantidade"
-          />
-        </div>
-
-        <!-- 7. Unidade de Medida -->
-        <div class="form-group" *ngIf="selection.activityIds?.length">
-          <label for="unit-{{ i }}">Unidade de Medida</label>
-          <input
-            type="text"
-            id="unit-{{ i }}"
-            [(ngModel)]="selection.unit"
-            placeholder="Digite a unidade de medida"
-          />
-        </div>
-
-        <!-- 8. Descrição -->
-        <div class="form-group" *ngIf="selection.activityIds?.length">
-          <label for="description-{{ i }}">Descrição</label>
-          <input
-            type="text"
-            id="description-{{ i }}"
-            [(ngModel)]="selection.description"
-            placeholder="Digite a descrição"
-          />
-        </div>
-
-        <!-- Botão para remover -->
-        <button
-          class="remove-btn"
-          (click)="removeSelection(i)"
-          *ngIf="selectedProfessionals.length > 1"
-          title="Remover seleção"
-        >
-          ×
-        </button>
       </div>
     </div>
-
-    <!-- Botão para adicionar nova linha -->
-    <button
-      class="add-professional-btn"
-      (click)="addProfessionalSelection()"
-      *ngIf="selectedProfessionals.length < maxSelections"
-    >
-      + Adicionar Profissional
-    </button>
   </div>
 </div>
