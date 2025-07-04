@@ -1,42 +1,54 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Professional } from '../models/professional.model';
 import { environment } from '../../../environments/environment';
+import { TechnicalService } from '../models/technical-service.model';
 
-interface Activity {
+export interface Activity {
   id: number;
   name: string;
   code: string;
 }
 
-interface TechnicalService {
-  id: number;
-  name: string;
-  code: string;
+interface PagedResponse<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
 }
-
 @Injectable({
   providedIn: 'root'
 })
 export class ProfessionalService {
-  private apiUrl = `${environment.apiUrl}/professionals/getAllProfessionals`;
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
-  register(professional: Professional): Observable<Professional> {
-    return this.http.post<Professional>(this.apiUrl, professional);
-  }
-
+  /**
+   * Busca todos os profissionais.
+   */
   search(): Observable<Professional[]> {
-    return this.http.get<Professional[]>(this.apiUrl);
+    return this.http.get<Professional[]>(`${this.baseUrl}/professionals/getAllProfessionals`);
   }
 
-  getActivities(): Observable<Activity[]> {
-    return this.http.get<Activity[]>(`${environment.apiUrl}/activities`);
+  getTechnicalServicesByProfessional(professionalId: number): Observable<TechnicalService[]> {
+    return this.http.get<TechnicalService[]>(
+      `${this.baseUrl}/formation-service-activities/byFormation/${professionalId}`
+    );
   }
-
-  getTechnicalServices(): Observable<TechnicalService[]> {
-    return this.http.get<TechnicalService[]>(`${environment.apiUrl}/technical-services`);
+  /**
+   * Atividades fictícias por serviço técnico.
+   */
+  getActivitiesByService(serviceId: number): Observable<Activity[]> {
+    console.log(serviceId)
+    return this.http.get<Activity[]>(`${this.baseUrl}/formation-service-activities/byService/${serviceId}/activities`)
+    // const mockActivities: Activity[] = [
+    //   { id: 201, name: 'Estudo Técnico Preliminar', code: 'AT001' },
+    //   { id: 202, name: 'Relatório de Impacto Ambiental', code: 'AT002' },
+    //   { id: 203, name: 'Laudo de Estabilidade', code: 'AT003' }
+    // ];
+    // return of(mockActivities);
   }
 }

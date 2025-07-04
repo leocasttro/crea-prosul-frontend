@@ -13,12 +13,12 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: 'register',
+    path: 'professional-register',
     component: ProfessionalRegisterComponent,
     canActivate: [authGuard]
   },
   {
-    path: 'search',
+    path: 'professional-search',
     component: ProfessionalSearchComponent,
     canActivate: [authGuard]
   },

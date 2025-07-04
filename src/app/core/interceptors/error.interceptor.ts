@@ -13,7 +13,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error) => {
       if (error.status === 401) {
         if (isPlatformBrowser(platformId)) {
-          console.log(`Erro 401 em ${req.url}, redirecionando para /login`);
           localStorage.removeItem('token');
           router.navigate(['/login'], { queryParams: { returnUrl: req.url } });
         } else {

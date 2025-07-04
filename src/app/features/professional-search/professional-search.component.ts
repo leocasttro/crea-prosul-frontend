@@ -4,8 +4,7 @@ import { ProfessionalService } from '../../core/services/professional.service';
 import { Professional } from '../../core/models/professional.model';
 import { TechnicalService } from '../../core/models/technical-service.model';
 import { FormsModule } from '@angular/forms';
-import { FormBuilder, FormArray } from '@angular/forms';
-import { NgSelectModule } from '@ng-select/ng-select'; // Importe o módulo do ng-select
+import { NgSelectModule } from '@ng-select/ng-select';
 
 interface Activity {
   id: number;
@@ -15,9 +14,11 @@ interface Activity {
 
 interface Selection {
   professional: Professional | null;
-  activity: Activity | null;
-  technicalServiceIds: number[] | null; // Ajustado para array de IDs
-  quantity: number | null; // Inicializado como number ou null
+  service: string | null;
+  technicalServices: TechnicalService[];
+  activities: Activity[];
+  activityIds: number[];
+  quantity: number | null;
   unit: string | null;
   description: string | null;
 }
@@ -25,24 +26,20 @@ interface Selection {
 @Component({
   selector: 'app-professional-search',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgSelectModule], // Adicione NgSelectModule
+  imports: [CommonModule, FormsModule, NgSelectModule],
   templateUrl: './professional-search.component.html',
   styleUrls: ['./professional-search.component.scss'],
 })
 export class ProfessionalSearchComponent implements OnInit {
   professionals: Professional[] = [];
   selectedProfessionals: Selection[] = [];
-  activities: Activity[] = [];
-  technicalServices: TechnicalService[] = [];
   maxSelections: number = 6;
 
-  constructor(private fb: FormBuilder, private professionalService: ProfessionalService) {}
+  constructor(private professionalService: ProfessionalService) {}
 
   ngOnInit() {
     this.selectedProfessionals = [this.createEmptySelection()];
     this.loadProfessionals();
-    this.loadActivities();
-    this.loadTechnicalServices();
   }
 
   loadProfessionals() {
@@ -51,56 +48,89 @@ export class ProfessionalSearchComponent implements OnInit {
     });
   }
 
-  loadActivities() {
-    this.professionalService.getActivities().subscribe((data) => {
-      this.activities = data;
-    });
-  }
-
-  loadTechnicalServices() {
-    this.professionalService.getTechnicalServices().subscribe((data) => {
-      this.technicalServices = data;
-      console.log('TechnicalServices mapeados:', this.technicalServices);
-    });
-  }
-
   createEmptySelection(): Selection {
     return {
       professional: null,
-      activity: null,
-      technicalServiceIds: [], // Inicializado como array vazio
-      quantity: null, // Inicializado como null
+      service: null,
+      technicalServices: [],
+      activities: [],
+      activityIds: [],
+      quantity: null,
       unit: null,
       description: null,
     };
   }
 
   onProfessionalChange(selection: Selection) {
-    selection.activity = null;
-    selection.technicalServiceIds = [];
+      selection.service = null;
+      selection.activities = [];
+      selection.activityIds = [];
+      selection.quantity = null;
+      selection.unit = null;
+      selection.description = null;
+
+      if (selection.professional?.formation?.id) {
+        this.professionalService
+          .getTechnicalServicesByProfessional(selection.professional.formation.id)
+          .subscribe((services) => {
+            selection.technicalServices = services; // Atribui a lista diretamente
+          });
+      }
+    }
+
+  onServiceChange(selection: Selection) {
+    selection.activities = [];
+    selection.activityIds = [];
     selection.quantity = null;
     selection.unit = null;
     selection.description = null;
+
+    const selectedService = selection.technicalServices.find(
+      (service) => service.codigoServicoTecnico === selection.service
+    );
+
+    if (selectedService) {
+      this.professionalService.getActivitiesByService(selectedService.id)
+        .subscribe((response) => {
+          console.log('Atividades brutas:', response);
+
+          selection.activities = response.map((item: any) => ({
+            id: Number(item.codigoAtividade),
+            name: item.descricaoAtividade,
+            code: item.codigoAtividade,
+          }));
+        });
+    }
+    // if (selection.service) {
+    //   console.log('Código do serviço selecionado:', selection.service.codigoServicoTecnico);
+    //   this.professionalService
+    //     .getActivitiesByService(selection.service.id)
+    //     .subscribe((activities) => {
+    //       selection.activities = activities.map(activity => ({
+    //         id: activity.id,
+    //         name: activity.name || '',
+    //         code: activity.code || ''
+    //       }));
+    //     });
+    // }
   }
 
-  onActivityChange(selection: Selection) {
-    selection.technicalServiceIds = [];
-    selection.quantity = null;
-    selection.unit = null;
-    selection.description = null;
+  getActivityCodes(selection: Selection): string {
+    if (!selection.activities || !selection.activityIds?.length) return '';
+    const selected = selection.activities.filter((a) =>
+      selection.activityIds.includes(a.id)
+    );
+    return selected.map((a) => a.code).join(', ');
   }
 
-  getTechnicalServiceCodes(selection: Selection): string {
-    if (!selection.technicalServiceIds || !this.technicalServices) return '';
-    const services = this.technicalServices.filter(ts => selection.technicalServiceIds!.includes(ts.id));
-    return services.map(service => service.code || 'Sem código').join(', ') || '';
-  }
+  // getTechnicalServiceCode(selection: Selection): string {
+  //   return selection.service?.codigoServicoTecnico || '';
+  // }
 
   addProfessionalSelection() {
     if (this.selectedProfessionals.length < this.maxSelections) {
       this.selectedProfessionals.push(this.createEmptySelection());
     } else {
-      console.warn('Limite máximo de profissionais atingido!');
       alert('Você atingiu o limite máximo de profissionais (6)!');
     }
   }
@@ -111,7 +141,7 @@ export class ProfessionalSearchComponent implements OnInit {
     }
   }
 
-  trackByIndex(index: number) {
+  trackByIndex(index: number): number {
     return index;
   }
 }

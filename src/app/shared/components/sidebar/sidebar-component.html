@@ -14,11 +14,6 @@
     @if (user) {
       <img [src]="'/users/user.png'" alt="Foto de perfil" class="profile-image">
       <span class="user-name">{{ user.username || 'Usuário' }}</span>
-      @if (user.roles && user.roles.length > 0) {
-        <p>Papéis: {{ user.roles.join(', ') }}</p>
-      } @else {
-        <p>Papéis: Nenhum</p>
-      }
       <button (click)="logout()">Sair</button>
     } @else {
       <p>Usuário não autenticado</p>

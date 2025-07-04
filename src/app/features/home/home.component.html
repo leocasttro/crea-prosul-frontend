@@ -15,7 +15,7 @@
       <tr *ngFor="let professional of professionals">
         <td>{{ professional.id || '-' }}</td>
         <td>{{ professional.name }}</td>
-        <td>{{ professional.formation }}</td>
+        <td>{{ professional.formation.nome }}</td>
         <td>{{ professional.registrationNumber }}</td>
         <td>{{ professional.contactEmail }}</td>
         <td>{{ professional.phoneNumber || '-' }}</td>

@@ -10,15 +10,12 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (isPlatformBrowser(platformId)) {
     if (authService.isAuthenticated()) {
-      console.log(`Usuário autenticado, permitindo acesso à rota ${state.url}`);
       return true;
     }
-    console.log(`Usuário não autenticado, redirecionando para /login de ${state.url}`);
     router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;
   }
 
-  console.log(`SSR: Bloqueando acesso à rota ${state.url}`);
   router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
   return false;
 };

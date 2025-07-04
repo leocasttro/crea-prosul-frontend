@@ -1,14 +1,1 @@
-.main {
-  display: flex;
-  min-height: 100vh;
-}
 
-.content {
-  margin-left: 250px; // Mesma largura do sidebar
-  width: calc(100% - 300px);
-  background-color: #f4f4f4; // Cor neutra (cinza claro)
-  border-radius: 10px; // Bordas arredondadas
-  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1); // Sombra à direita
-  padding: 20px;
-  min-height: 100vh;
-}
