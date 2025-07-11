@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { User } from '../../../core/models/user.model';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, MatIconModule],
   templateUrl: './sidebar-component.html',
   styleUrls: ['./sidebar-component.scss']
 })
@@ -15,7 +16,7 @@ export class SidebarComponent implements OnInit {
   navItems = [
     { label: 'Início', path: '/home' },
     { label: 'Cadastrar Profissional', path: '/professional-register' }, // Ajustado para corresponder ao app.routes.ts
-    { label: 'Consultar código das atividades', path: '/professional-search' }, // Ajustado para corresponder ao app.routes.ts
+    { label: 'Solicitar ART', path: '/professional-search' }, // Ajustado para corresponder ao app.routes.ts
   ];
 
   user: User | null = null;
@@ -27,7 +28,6 @@ export class SidebarComponent implements OnInit {
       this.authService.getCurrentUser().subscribe({
         next: (user) => {
           this.user = user;
-          console.log('Usuário carregado no Sidebar:', user);
         },
         error: (err) => {
           console.error('Erro ao carregar usuário no Sidebar:', err);
@@ -36,7 +36,6 @@ export class SidebarComponent implements OnInit {
         }
       });
     } else {
-      console.log('Usuário não autenticado, pulando chamada a /api/auth/me');
       this.user = null;
       this.router.navigate(['/login']);
     }

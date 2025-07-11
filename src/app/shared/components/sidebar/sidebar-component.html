@@ -12,12 +12,18 @@
   </ul>
   <div class="user-profile">
     @if (user) {
-      <img [src]="'/users/user.png'" alt="Foto de perfil" class="profile-image">
-      <span class="user-name">{{ user.username || 'Usuário' }}</span>
-      <button (click)="logout()">Sair</button>
+      <div class="profile-content">
+        <img [src]="'/users/user.png'" alt="Foto de perfil" class="profile-image">
+        <span class="user-name">{{ user.username || 'Usuário' }}</span>
+        <button mat-button color="primary" (click)="logout()" class="logout-btn">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
     } @else {
       <p>Usuário não autenticado</p>
-      <a [routerLink]="['/login']">Fazer login</a>
+      <a [routerLink]="['/login']" class="login-link">
+        <i class="material-icons">login</i> <!-- Usando Material Icons -->
+      </a>
     }
   </div>
 </nav>

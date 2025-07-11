@@ -1,4 +1,3 @@
-// Manter inalterado
 .search-container {
   padding: 20px;
   margin-left: 300px;
@@ -21,7 +20,6 @@ h2 {
   text-align: center;
 }
 
-// Ajustar para grid
 .selection-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -31,38 +29,43 @@ h2 {
 
 .selection-row {
   display: grid;
-  grid-template-rows: auto auto; /* Duas linhas: Profissional/Serviço/Código, Atividades/Quantidade/Unidade/Botão */
+  grid-template-rows: auto auto auto; /* Três linhas: Profissional, Serviço/Atividades, Quantidade/Unidade/Botão */
   gap: 15px;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: background-color 0.3s ease;
+}
 
-  &.even-row {
-    background-color: #ffffff;
-  }
+.selection-row.even-row {
+  background-color: #ffffff;
+}
 
-  &.odd-row {
-    background-color: #f9f9f9;
-  }
+.selection-row.odd-row {
+  background-color: #f9f9f9;
 }
 
 .grid-container {
   display: contents; /* Permite que os filhos .grid-row herdem o grid pai */
 }
 
-// Primeira linha (Profissional, Serviço Técnico, Código)
-.grid-row {
+.grid-row.professional-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Três colunas para a primeira linha */
+  grid-template-columns: 4fr 8fr; /* Profissional ocupa 4/12, resto é vazio */
   gap: 15px;
   align-items: flex-end;
 }
 
-// Segunda linha (Atividades, Códigos, Quantidade, Unidade, Botão)
-.grid-row.full-width {
+.grid-row.service-activity-row {
   display: grid;
-  grid-template-columns: 45% 15% 10% 15% 15%; /* Cinco colunas: Atividades, Códigos, Quantidade, Unidade, Botão */
+  grid-template-columns: 3fr 2fr 5fr 2fr; /* Serviço: 3, Código Serviço: 3, Atividades: 4, Código Atividades: 2 */
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.grid-row.quantity-unit-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 10fr; /* Quatro colunas: Quantidade, Unidade, Botão */
   gap: 15px;
   align-items: flex-end;
 }
@@ -75,81 +78,89 @@ h2 {
   flex: 1;
   display: flex;
   flex-direction: column;
-
-  label {
-    font-size: 0.90rem;
-    color: #555;
-    margin-bottom: 5px;
-    font-weight: 600;
-  }
-
-  input::placeholder {
-    font-size: 0.75rem;
-    color: #999;
-  }
-
-  ::ng-deep .ng-select .ng-select-container .ng-placeholder {
-    font-size: 0.75rem;
-    color: #999;
-  }
-
-  select,
-  input {
-    padding: 8px;
-    font-size: 1rem;
-    border: 1px solid #c9c9c9;
-    border-radius: 4px;
-    background-color: hsl(0, 0%, 100%);
-    width: 100%; /* Mantém 100% dentro da célula do grid */
-    box-sizing: border-box;
-  }
-
-  &.code-display {
-    align-items: flex-start;
-
-    span {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #007bff;
-      padding: 8px;
-      background-color: #e9f7fe;
-      border: 1px solid #a8d7f7;
-      border-radius: 4px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-  }
-
-  &.activities {
-    // Ocupa automaticamente 45% devido ao grid-template-columns
-  }
-
-  &.activity-codes,
-  &.quantity {
-    // Ocupa automaticamente 15% e 10% devido ao grid-template-columns
-  }
 }
 
+.form-group label {
+  font-size: 0.90rem;
+  color: #555;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.form-group input::placeholder,
+::ng-deep .ng-select .ng-select-container .ng-placeholder {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.form-group select,
+.form-group input {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #c9c9c9;
+  border-radius: 4px;
+  background-color: hsl(0, 0%, 100%);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group.code-display {
+  align-items: flex-start;
+}
+
+.form-group.code-display span {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #007bff;
+  padding: 8px;
+  background-color: #e9f7fe;
+  border: 1px solid #a8d7f7;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+}
+
+
 .remove-btn {
-  padding: 8px 12px;
+  padding: 8px 5px;
   font-size: 1.2rem;
-  width: 45%;
+  width: 15%;
   color: #fff;
   background-color: #dc3545;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   align-self: flex-end;
-  margin-left: 0; /* Removido margin-left para melhor alinhamento */
-  justify-self: center; /* Centraliza na célula */
+}
 
-  &:hover {
-    background-color: #c82333;
-  }
+.remove-btn:hover {
+  background-color: #c82333;
+}
+
+.add-btn {
+  padding: 8px 5px;
+  font-size: 1.2rem;
+  width: 15%;
+  color: #fff;
+  background-color: #459e39;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.add-btn:hover {
+  background-color: #459e39;
 }
 
 .add-professional-btn {
-  display: block;
   width: auto;
   padding: 12px 25px;
   font-size: 1.1rem;
@@ -158,14 +169,28 @@ h2 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin: 20px auto 0 auto; /* Mantém centralizado */
   transition: background-color 0.3s ease;
+}
 
-  &:hover {
-    background-color: #218838;
-  }
+.remove-professional-btn {
+  width: auto;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  color: #fff;
+  background-color: #e41818;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-professional-btn:hover {
+  background-color: #218838;
 }
 
 .button-container {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }

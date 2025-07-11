@@ -12,15 +12,19 @@ interface Activity {
   code: string;
 }
 
-interface Selection {
-  professional: Professional | null;
+interface Service {
   service: string | null;
-  technicalServices: TechnicalService[];
   activities: Activity[];
   activityIds: number[];
   quantity: number | null;
   unit: string | null;
   description: string | null;
+}
+
+interface Selection {
+  professional: Professional | null;
+  services: Service[];
+  technicalServices: TechnicalService[];
 }
 
 @Component({
@@ -51,8 +55,14 @@ export class ProfessionalSearchComponent implements OnInit {
   createEmptySelection(): Selection {
     return {
       professional: null,
-      service: null,
+      services: [this.createEmptyService()],
       technicalServices: [],
+    };
+  }
+
+  createEmptyService(): Service {
+    return {
+      service: null,
       activities: [],
       activityIds: [],
       quantity: null,
@@ -62,76 +72,75 @@ export class ProfessionalSearchComponent implements OnInit {
   }
 
   onProfessionalChange(selection: Selection) {
-      selection.service = null;
-      selection.activities = [];
-      selection.activityIds = [];
-      selection.quantity = null;
-      selection.unit = null;
-      selection.description = null;
+    selection.services = [this.createEmptyService()];
+    selection.technicalServices = [];
 
-      if (selection.professional?.formation?.id) {
-        this.professionalService
-          .getTechnicalServicesByProfessional(selection.professional.formation.id)
-          .subscribe((services) => {
-            selection.technicalServices = services; // Atribui a lista diretamente
-          });
-      }
+    if (selection.professional?.formation?.id) {
+      this.professionalService
+        .getTechnicalServicesByProfessional(selection.professional.formation.id)
+        .subscribe((services) => {
+          selection.technicalServices = services;
+        });
     }
+  }
 
-  onServiceChange(selection: Selection) {
-    selection.activities = [];
-    selection.activityIds = [];
-    selection.quantity = null;
-    selection.unit = null;
-    selection.description = null;
+  onServiceChange(service: Service, selection: Selection) {
+    service.activities = [];
+    service.activityIds = [];
+    service.quantity = null;
+    service.unit = null;
+    service.description = null;
 
     const selectedService = selection.technicalServices.find(
-      (service) => service.codigoServicoTecnico === selection.service
+      (s) => s.codigoServicoTecnico === service.service
     );
 
     if (selectedService) {
-      this.professionalService.getActivitiesByService(selectedService.id)
-        .subscribe((response) => {
-          console.log('Atividades brutas:', response);
-
-          selection.activities = response.map((item: any) => ({
+      this.professionalService
+        .getActivitiesByService(selectedService.id)
+        .subscribe((res) => {
+          service.activities = res.map((item: any) => ({
             id: Number(item.codigoAtividade),
             name: item.descricaoAtividade,
             code: item.codigoAtividade,
           }));
         });
     }
-    // if (selection.service) {
-    //   console.log('Código do serviço selecionado:', selection.service.codigoServicoTecnico);
-    //   this.professionalService
-    //     .getActivitiesByService(selection.service.id)
-    //     .subscribe((activities) => {
-    //       selection.activities = activities.map(activity => ({
-    //         id: activity.id,
-    //         name: activity.name || '',
-    //         code: activity.code || ''
-    //       }));
-    //     });
-    // }
   }
 
-  getActivityCodes(selection: Selection): string {
-    if (!selection.activities || !selection.activityIds?.length) return '';
-    const selected = selection.activities.filter((a) =>
-      selection.activityIds.includes(a.id)
-    );
-    return selected.map((a) => a.code).join(', ');
+  getActivityCodes(service: Service): string {
+    if (!service.activities || !service.activityIds?.length) return '';
+    return service.activityIds
+      .map((id) => service.activities.find((a) => a.id === id)?.code || '')
+      .filter((code) => !!code)
+      .join(', ');
   }
-
-  // getTechnicalServiceCode(selection: Selection): string {
-  //   return selection.service?.codigoServicoTecnico || '';
-  // }
 
   addProfessionalSelection() {
     if (this.selectedProfessionals.length < this.maxSelections) {
       this.selectedProfessionals.push(this.createEmptySelection());
     } else {
       alert('Você atingiu o limite máximo de profissionais (6)!');
+    }
+  }
+
+  removeProfessionalSelection() {
+    if (this.selectedProfessionals.length > 1) {
+      this.selectedProfessionals.pop();
+    }
+  }
+
+  addService(selection: Selection) {
+    if (selection.services.length < 6) {
+      selection.services.push(this.createEmptyService());
+    } else {
+      alert('Você atingiu o limite máximo de 6 serviços para este profissional!');
+    }
+  }
+
+  removeService(selection: Selection, index: number) {
+    if (selection.services.length > 1) {
+      selection.services.splice(index, 1);
     }
   }
 
