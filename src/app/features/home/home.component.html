@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let professional of professionals">
+      <tr *ngFor="let professional of professionals" clickable (click)="getProfessional(professional.id)">
         <td>{{ professional.id || '-' }}</td>
         <td>{{ professional.name }}</td>
         <td>{{ professional.formation.nome }}</td>

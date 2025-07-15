@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class SidebarComponent implements OnInit {
   navItems = [
-  { label: 'Início', icon: 'home', path: '/home' },
+  { label: 'Início', icon: 'home', path: '/home', keepActiveFor: ['/professional-details']},
   { label: 'Cadastrar Profissional', icon: 'person_add', path: '/professional-register' },
   { label: 'Cadastrar Cliente', icon: 'groups', path: '/costumer-register' },
   { label: 'Solicitar ART', icon: 'assignment', path: '/professional-search' },
@@ -58,7 +58,14 @@ toggleSidebar(): void {
     this.router.navigate(['/login']);
   }
 
+  isNavItemActive(path: string): boolean {
+    if (path === '/home') {
+      return this.router.url === '/home' || this.router.url.startsWith('/professional-details');
+    }
+    return this.router.url === path;
+  }
+
   get hasActiveItem(): boolean {
-    return this.navItems.some(item => this.router.url.startsWith(item.path));
+    return this.navItems.some(item => this.isNavItemActive(item.path));
   }
 }
