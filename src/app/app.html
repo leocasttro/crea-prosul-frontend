@@ -1,10 +1,13 @@
 <main class="main">
-  @if (isAuthenticated && !isLoginRoute) {
-    <app-sidebar></app-sidebar>
-  }
   <div class="content">
-    <router-outlet />
+    @if (isAuthenticated && !isLoginRoute) {
+      <app-sidebar
+        [class.collapsed]="isCollapsed"
+        (collapsedChange)="onSidebarToggle($event)"
+      ></app-sidebar>
+    }
+    <div class="router-container" [class.collapsed]="isCollapsed">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </main>
-
-

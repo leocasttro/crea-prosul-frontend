@@ -17,8 +17,13 @@ export class App {
 
   isAuthenticated = false;
   isLoginRoute = false;
+  isCollapsed = false;
 
   constructor(private authService: AuthService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
+
+  onSidebarToggle(collapsed: boolean) {
+    this.isCollapsed = collapsed;
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {

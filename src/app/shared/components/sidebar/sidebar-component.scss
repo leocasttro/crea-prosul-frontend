@@ -1,4 +1,3 @@
-// Manter inalterado
 .sidebar {
   width: 250px;
   height: 100vh;
@@ -9,27 +8,122 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
-  padding-bottom: 30px; // Aumenta o espaço na parte inferior
+  padding-bottom: 30px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 
   &.no-shadow {
     box-shadow: none;
+  }
+
+  &.collapsed {
+    width: 70px;
+    padding: 20px 10px;
+
+    .sidebar-header {
+      justify-content: center;
+
+      .logo-prosul,
+      h2 {
+        display: none;
+      }
+    }
+
+    .nav-list .nav-item a {
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+      font-size: 0;
+
+      .mat-icon {
+        font-size: 24px;
+      }
+
+      span {
+        display: none;
+      }
+    }
+
+    .user-profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: auto;
+      padding: 10px;
+
+      .profile-content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .profile-image {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 6px;
+      }
+
+      .user-name {
+        display: none;
+      }
+
+      .logout-btn {
+        padding: 5px;
+        background-color: transparent;
+        color: white;
+        border: none;
+
+        .mat-icon {
+          font-size: 24px;
+        }
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
   }
 }
 
 .sidebar-header {
   margin-bottom: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 100px;
 
-  .logo-prosul {
-    width: 120px; // Ajuste conforme o tamanho desejado
-    height: auto; // Mantém a proporção
-    margin-bottom: 0; // Espaço entre a logo e o texto CREA
-  }
+
   h2 {
     font-size: 1.5rem;
     color: white;
-    font-style: italic;
+    margin-left: 10px;
+  }
+
+  .closed-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 50px;
+
+    .closed {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: #f4f4f4;
+      }
+
+      mat-icon {
+        font-size: 28px;
+      }
+    }
   }
 }
 
@@ -37,14 +131,16 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  flex-grow: 1; // Garante que a lista empurre o perfil para baixo
+  flex-grow: 1;
 }
 
 .nav-item {
   margin-bottom: 10px;
 
   a {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     padding: 10px;
     text-decoration: none;
     color: #333;
@@ -57,7 +153,6 @@
       background-color: #f4f4f4;
       color: #333;
       font-weight: bold;
-      border-radius: 15px;
       margin-right: -20px;
       padding-right: 30px;
 
@@ -76,7 +171,6 @@
       background-color: #f4f4f4;
       color: #333;
       font-weight: bold;
-      border-radius: 15px;
       margin-right: -20px;
       padding-right: 30px;
 
@@ -90,62 +184,65 @@
         background-color: #f4f4f4;
       }
     }
+
+    .mat-icon {
+      font-size: 24px;
+    }
   }
 }
 
 .user-profile {
   display: flex;
-  flex-direction: column; /* Mantém a estrutura geral, mas ajustamos dentro de .profile-content */
+  flex-direction: column;
   margin-top: 20px;
-  margin-bottom: 20px; // Adiciona espaço abaixo do perfil
+  margin-bottom: 20px;
   padding: 10px;
   background-color: #007bff;
   border-radius: 8px;
-}
 
-.profile-content {
-  display: flex;
-  align-items: center; /* Alinha verticalmente */
-  margin-bottom: 0; /* Remove margem inferior, pois o botão estará na mesma linha */
-}
-
-.profile-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
-  border: 2px solid #ddd;
-}
-
-.user-name {
-  font-size: 1rem;
-  color: white;
-  font-weight: 500;
-  margin-right: 10px; /* Ligeiro espaço entre o nome e o botão */
-}
-
-.logout-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5px 10px;
-  font-size: 1rem;
-  color: white;
-  background-color: #007bff; /* Mesma cor de fundo do sidebar */
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  line-height: 1; /* Garante alinhamento vertical */
-
-  &:hover {
-    background-color: #0056b3; /* Tom mais escuro ao hover */
+  .profile-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
   }
 
-  .mat-icon {
-    font-size: 24px; /* Tamanho padrão do ícone */
-    margin-right: 0; /* Sem margem, pois não há texto ao lado */
+  .profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+  }
+
+  .user-name {
+    font-size: 1rem;
+    color: white;
+    font-weight: 500;
+    margin-right: 10px;
+  }
+
+  .logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    font-size: 1rem;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    .mat-icon {
+      font-size: 24px;
+      margin-right: 0;
+    }
   }
 }
 
@@ -156,20 +253,40 @@
   padding: 5px 10px;
   font-size: 1rem;
   color: white;
-  background-color: #0056b3; /* Cor de fundo diferente para login */
+  background-color: #0056b3;
   border: none;
   border-radius: 4px;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 10px; /* Espaço acima do link quando não autenticado */
+  margin-top: 10px;
 
   &:hover {
     background-color: #004085;
   }
 
   .material-icons {
-    font-size: 24px; /* Tamanho padrão do ícone */
-    margin-right: 5px; /* Espaço entre o ícone e o texto, se houver */
+    font-size: 24px;
+    margin-right: 5px;
+  }
+}
+
+.hamburger-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+
+  &:hover {
+    color: #f4f4f4;
+  }
+
+  mat-icon {
+    font-size: 28px;
   }
 }

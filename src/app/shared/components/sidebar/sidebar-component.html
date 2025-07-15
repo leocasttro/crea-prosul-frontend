@@ -1,28 +1,39 @@
-<nav class="sidebar" [ngClass]="{'no-shadow': hasActiveItem}">
+<nav class="sidebar" [ngClass]="{ 'collapsed': isCollapsed, 'no-shadow': hasActiveItem }">
   <div class="sidebar-header">
-    <img src="/logo.png" alt="Logo Prosul" class="logo-prosul">
-    <h2>CREA</h2>
+    <button mat-icon-button (click)="toggleSidebar()" class="hamburger-btn" *ngIf="isCollapsed">
+      <mat-icon>{{ isCollapsed ? 'menu_open' : 'menu' }}</mat-icon>
+    </button>
+
+    <h2>Menu</h2>
+    <div class="closed-btn" *ngIf="!isCollapsed" (click)="toggleSidebar()">
+      <button class="closed">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
   </div>
+
   <ul class="nav-list">
     <li *ngFor="let item of navItems" class="nav-item">
-      <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }" aria-current="page">
-        {{ item.label }}
+      <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">
+        <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+        <span *ngIf="!isCollapsed">{{ item.label }}</span>
       </a>
     </li>
   </ul>
+
   <div class="user-profile">
     @if (user) {
       <div class="profile-content">
-        <img [src]="'/users/user.png'" alt="Foto de perfil" class="profile-image">
-        <span class="user-name">{{ user.username || 'Usuário' }}</span>
+        <img [src]="'/users/user.png'" alt="Foto de perfil" class="profile-image" />
+        <span class="user-name" *ngIf="!isCollapsed">{{ user.username || 'Usuário' }}</span>
         <button mat-button color="primary" (click)="logout()" class="logout-btn">
           <mat-icon>logout</mat-icon>
         </button>
       </div>
     } @else {
-      <p>Usuário não autenticado</p>
+      <p *ngIf="!isCollapsed">Usuário não autenticado</p>
       <a [routerLink]="['/login']" class="login-link">
-        <i class="material-icons">login</i> <!-- Usando Material Icons -->
+        <i class="material-icons">login</i>
       </a>
     }
   </div>

@@ -5,6 +5,7 @@ import { ProfessionalSearchComponent } from './features/professional-search/prof
 import { LoginComponent } from './shared/components/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
 import { ProfessionalDetails } from './features/professional-details/professional-details';
+import { CostumerRegisterComponent } from './features/costumer-register/costumer-register.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,6 +27,11 @@ export const routes: Routes = [
   {
     path: 'professional-details',
     component: ProfessionalDetails,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'costumer-register',
+    component: CostumerRegisterComponent,
     canActivate: [authGuard]
   },
   {

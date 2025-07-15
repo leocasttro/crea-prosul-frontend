@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
@@ -14,10 +14,21 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class SidebarComponent implements OnInit {
   navItems = [
-    { label: 'Início', path: '/home' },
-    { label: 'Cadastrar Profissional', path: '/professional-register' }, // Ajustado para corresponder ao app.routes.ts
-    { label: 'Solicitar ART', path: '/professional-search' }, // Ajustado para corresponder ao app.routes.ts
-  ];
+  { label: 'Início', icon: 'home', path: '/home' },
+  { label: 'Cadastrar Profissional', icon: 'person_add', path: '/professional-register' },
+  { label: 'Cadastrar Cliente', icon: 'groups', path: '/costumer-register' },
+  { label: 'Solicitar ART', icon: 'assignment', path: '/professional-search' },
+];
+
+  isCollapsed = false;
+  @Output() collapsedChange = new EventEmitter<boolean>();
+
+
+toggleSidebar(): void {
+  this.isCollapsed = !this.isCollapsed;
+  this.collapsedChange.emit(this.isCollapsed); // <-- Aqui envia para o pai
+}
+
 
   user: User | null = null;
 
