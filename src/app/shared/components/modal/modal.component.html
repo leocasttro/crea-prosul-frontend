@@ -1,0 +1,153 @@
+<div class="modal-container">
+  <h2 mat-dialog-title>Dados do Contrato</h2>
+  <mat-dialog-content>
+    <form [formGroup]="modalData" (ngSubmit)="onSubmit()">
+      <!-- Seção: Local da Obra/Serviço -->
+      <h4>Local da Obra/Serviço</h4>
+      <div class="grid-container local-obra">
+        <mat-form-field appearance="fill" class="grid-item nome-empresa">
+          <mat-label>Nome da Empresa</mat-label>
+          <input matInput formControlName="nomeEmpresa" required>
+          <mat-error *ngIf="modalData.get('nomeEmpresa')?.hasError('required')">
+            Nome da empresa é obrigatório
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item endereco">
+          <mat-label>Endereço</mat-label>
+          <input matInput formControlName="endereco" required>
+          <mat-error *ngIf="modalData.get('endereco')?.hasError('required')">
+            Endereço é obrigatório
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item cep">
+          <mat-label>CEP</mat-label>
+          <input matInput formControlName="cep" required>
+          <mat-error *ngIf="modalData.get('cep')?.hasError('required')">
+            CEP é obrigatório
+          </mat-error>
+          <mat-error *ngIf="modalData.get('cep')?.hasError('pattern')">
+            CEP deve estar no formato XXXXX-XXX
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item telefone">
+          <mat-label>Telefone</mat-label>
+          <input matInput formControlName="telefone" required>
+          <mat-error *ngIf="modalData.get('telefone')?.hasError('required')">
+            Telefone é obrigatório
+          </mat-error>
+          <mat-error *ngIf="modalData.get('telefone')?.hasError('pattern')">
+            Telefone deve estar no formato (XX) XXXXX-XXXX
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item cnpj">
+          <mat-label>CNPJ</mat-label>
+          <input matInput formControlName="cnpj" required>
+          <mat-error *ngIf="modalData.get('cnpj')?.hasError('required')">
+            CNPJ é obrigatório
+          </mat-error>
+          <mat-error *ngIf="modalData.get('cnpj')?.hasError('pattern')">
+            CNPJ deve estar no formato XX.XXX.XXX/XXXX-XX
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Seção: Resumo do Contrato -->
+      <h3>Resumo do Contrato</h3>
+      <div class="grid-container resumo-contrato">
+        <mat-form-field appearance="fill" class="grid-item resumo-contrato">
+          <mat-label>Escopo do Contrato</mat-label>
+          <textarea matInput formControlName="resumoContrato" rows="4" required></textarea>
+          <mat-error *ngIf="modalData.get('resumoContrato')?.hasError('required')">
+            Escopo do contrato é obrigatório
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item resumo-ordem-servico">
+          <mat-label>Escopo da Ordem de Serviço</mat-label>
+          <textarea matInput formControlName="resumoOrdemServico" rows="4" required></textarea>
+          <mat-error *ngIf="modalData.get('resumoOrdemServico')?.hasError('required')">
+            Escopo da ordem de serviço é obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Seção: Detalhes do Contrato -->
+      <h3>Detalhes do Contrato</h3>
+      <div class="grid-container detalhes-contrato">
+        <mat-form-field appearance="fill" class="grid-item numero-contrato">
+          <mat-label>Nº do Contrato</mat-label>
+          <input matInput formControlName="numeroContrato" required>
+          <mat-error *ngIf="modalData.get('numeroContrato')?.hasError('required')">
+            Nº do contrato é obrigatório
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item numero-ordem-servico">
+          <mat-label>Nº da Ordem de Serviço</mat-label>
+          <input matInput formControlName="numeroOrdemServico" required>
+          <mat-error *ngIf="modalData.get('numeroOrdemServico')?.hasError('required')">
+            Nº da ordem de serviço é obrigatório
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item numero-servico">
+          <mat-label>Nº do Serviço</mat-label>
+          <input matInput formControlName="numeroServico" required>
+          <mat-error *ngIf="modalData.get('numeroServico')?.hasError('required')">
+            Nº do serviço é obrigatório
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item inicio">
+          <mat-label>Início</mat-label>
+          <input matInput [matDatepicker]="inicioPicker" formControlName="inicio" required>
+          <mat-datepicker-toggle matSuffix [for]="inicioPicker"></mat-datepicker-toggle>
+          <mat-datepicker #inicioPicker></mat-datepicker>
+          <mat-error *ngIf="modalData.get('inicio')?.hasError('required')">
+            Data de início é obrigatória
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item termino">
+          <mat-label>Término</mat-label>
+          <input matInput [matDatepicker]="terminoPicker" formControlName="termino" required>
+          <mat-datepicker-toggle matSuffix [for]="terminoPicker"></mat-datepicker-toggle>
+          <mat-datepicker #terminoPicker></mat-datepicker>
+          <mat-error *ngIf="modalData.get('termino')?.hasError('required')">
+            Data de término é obrigatória
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item valor-obra-servico">
+          <mat-label>Valor da Obra/Serviço</mat-label>
+          <input matInput type="number" formControlName="valorObraServico" required>
+          <mat-error *ngIf="modalData.get('valorObraServico')?.hasError('required')">
+            Valor da obra é obrigatório
+          </mat-error>
+          <mat-error *ngIf="modalData.get('valorObraServico')?.hasError('min')">
+            Valor da obra deve ser maior ou igual a 0
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="grid-item valor-total-contrato">
+          <mat-label>Valor Total do Contrato</mat-label>
+          <input matInput type="number" formControlName="valorTotalContrato" required>
+          <mat-error *ngIf="modalData.get('valorTotalContrato')?.hasError('required')">
+            Valor total do contrato é obrigatório
+          </mat-error>
+          <mat-error *ngIf="modalData.get('valorTotalContrato')?.hasError('min')">
+            Valor total do contrato deve ser maior ou igual a 0
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <h3>Cliente</h3>
+      <ng-select>
+
+      </ng-select>
+
+      <mat-error *ngIf="modalData.errors?.invalidDateRange" class="date-range-error">
+        A data de término deve ser posterior à data de início
+      </mat-error>
+
+      <mat-dialog-actions>
+        <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="modalData.invalid">Enviar</button>
+      </mat-dialog-actions>
+
+    </form>
+  </mat-dialog-content>
+</div>

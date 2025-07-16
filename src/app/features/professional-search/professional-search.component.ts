@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ArtFormExport } from '../../core/models/art.model';
 import { ExcelExportService } from '../../core/services/excel-export.service';
+import { ModalComponent, ModalData } from '../../shared/components/modal/modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface Activity {
   id: number;
@@ -41,7 +43,7 @@ export class ProfessionalSearchComponent implements OnInit {
   selectedProfessionals: Selection[] = [];
   maxSelections: number = 6;
 
-  constructor(private professionalService: ProfessionalService, private excelExportService: ExcelExportService) {}
+  constructor(private professionalService: ProfessionalService, private excelExportService: ExcelExportService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.selectedProfessionals = [this.createEmptySelection()];
@@ -158,13 +160,20 @@ export class ProfessionalSearchComponent implements OnInit {
   }
 
   exportToExcel() {
-  const exportData: ArtFormExport = {
-    professionals: this.selectedProfessionals.map((selection) => ({
-      professional: selection.professional,
-      services: selection.services,
-      technicalServices: selection.technicalServices,
-    })),
-  };
-  this.excelExportService.exportArtFormToExcel(exportData);
-}
+    const dialogRef = this.dialog.open(ModalComponent, {
+      data: {
+        nomeEmpresa: '',
+        endereco: '',
+        cep: '',
+        telefone: '',
+        cnpj: '',
+        selectedProfessionals: this.selectedProfessionals // Passa os dados de selectedProfessionals
+      },
+      width: '1300px', // Largura fixa do modal
+      maxWidth: '120vw' // Limita a largura máxima para 90% da viewport
+    });
+
+    dialogRef.afterClosed().subscribe((result: ModalData & { selectedProfessionals: Selection[] }) => {
+    });
+  }
 }

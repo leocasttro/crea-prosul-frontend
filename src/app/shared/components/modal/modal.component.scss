@@ -1,0 +1,83 @@
+.modal-container {
+  padding: 20px;
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  h3, h4 {
+    font-size: 18px;
+    margin: 20px 0 10px;
+    font-weight: 500;
+    color: var(--mat-sys-on-surface);
+  }
+
+  .grid-container {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .local-obra {
+    grid-template-columns: repeat(3, 1fr);
+    .nome-empresa {
+      grid-column: span 2;
+    }
+    .cep {
+      grid-column: span 1;
+    }
+    .telefone {
+      grid-column: span 1;
+    }
+    .cnpj {
+      grid-column: span 2;
+    }
+  }
+
+  .resumo-contrato {
+    grid-template-columns: repeat(2, 1fr);
+    .resumo-contrato, .resumo-ordem-servico {
+      grid-column: span 1;
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+    }
+  }
+
+  .detalhes-contrato {
+    grid-template-columns: repeat(3, 1fr);
+    .numero-contrato, .numero-ordem-servico, .numero-servico {
+      grid-column: span 1;
+    }
+    .inicio, .termino {
+      grid-column: span 1.5;
+    }
+    .valor-obra-servico, .valor-total-contrato {
+      grid-column: span 1.5;
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .date-range-error {
+    color: var(--mat-sys-error);
+    font-size: 12px;
+    margin-top: 10px;
+  }
+
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  button {
+    padding: 8px 16px;
+  }
+}

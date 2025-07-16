@@ -26,7 +26,6 @@ export class ProfessionalRegisterComponent implements OnInit {
 
   onSubmit(): void {
     if (this.professionalForm.valid) {
-      console.log('Professional', this.professionalForm.value);
       alert('Profissional cadastrado com sucesso!');
       this.professionalForm.reset();
     }
