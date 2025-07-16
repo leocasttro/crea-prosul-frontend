@@ -5,6 +5,8 @@ import { Professional } from '../../core/models/professional.model';
 import { TechnicalService } from '../../core/models/technical-service.model';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ArtFormExport } from '../../core/models/art.model';
+import { ExcelExportService } from '../../core/services/excel-export.service';
 
 interface Activity {
   id: number;
@@ -39,7 +41,7 @@ export class ProfessionalSearchComponent implements OnInit {
   selectedProfessionals: Selection[] = [];
   maxSelections: number = 6;
 
-  constructor(private professionalService: ProfessionalService) {}
+  constructor(private professionalService: ProfessionalService, private excelExportService: ExcelExportService) {}
 
   ngOnInit() {
     this.selectedProfessionals = [this.createEmptySelection()];
@@ -108,6 +110,7 @@ export class ProfessionalSearchComponent implements OnInit {
     }
   }
 
+
   getActivityCodes(service: Service): string {
     if (!service.activities || !service.activityIds?.length) return '';
     return service.activityIds
@@ -153,4 +156,15 @@ export class ProfessionalSearchComponent implements OnInit {
   trackByIndex(index: number): number {
     return index;
   }
+
+  exportToExcel() {
+  const exportData: ArtFormExport = {
+    professionals: this.selectedProfessionals.map((selection) => ({
+      professional: selection.professional,
+      services: selection.services,
+      technicalServices: selection.technicalServices,
+    })),
+  };
+  this.excelExportService.exportArtFormToExcel(exportData);
+}
 }

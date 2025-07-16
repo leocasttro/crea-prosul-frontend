@@ -1,6 +1,6 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { SidebarComponent } from "./shared/components/sidebar/sidebar-component";
+import { SidebarComponent } from "./shared/components/sidebar/sidebar.component";
 import { AuthService } from './core/services/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 import { filter } from 'rxjs';

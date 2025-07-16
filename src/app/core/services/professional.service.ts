@@ -11,13 +11,6 @@ export interface Activity {
   code: string;
 }
 
-interface PagedResponse<T> {
-  content: T[];
-  totalPages: number;
-  totalElements: number;
-  size: number;
-  number: number;
-}
 @Injectable({
   providedIn: 'root'
 })
@@ -38,17 +31,9 @@ export class ProfessionalService {
       `${this.baseUrl}/formation-service-activities/byFormation/${professionalId}`
     );
   }
-  /**
-   * Atividades fictícias por serviço técnico.
-   */
+
   getActivitiesByService(serviceId: number): Observable<Activity[]> {
     console.log(serviceId)
     return this.http.get<Activity[]>(`${this.baseUrl}/formation-service-activities/byService/${serviceId}/activities`)
-    // const mockActivities: Activity[] = [
-    //   { id: 201, name: 'Estudo Técnico Preliminar', code: 'AT001' },
-    //   { id: 202, name: 'Relatório de Impacto Ambiental', code: 'AT002' },
-    //   { id: 203, name: 'Laudo de Estabilidade', code: 'AT003' }
-    // ];
-    // return of(mockActivities);
   }
 }

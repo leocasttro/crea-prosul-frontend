@@ -4,7 +4,12 @@
 
     <div class="selection-container">
       <div
-        *ngFor="let selection of selectedProfessionals; let i = index; let last = last; trackBy: trackByIndex"
+        *ngFor="
+          let selection of selectedProfessionals;
+          let i = index;
+          let last = last;
+          trackBy: trackByIndex
+        "
         class="selection-row"
         [class.even-row]="i % 2 === 0"
         [class.odd-row]="i % 2 !== 0"
@@ -25,8 +30,18 @@
           </div>
 
           <!-- Iterar sobre os serviços -->
-          <div *ngFor="let service of selection.services; let j = index; let last = last;" class="grid-container">
-            <div class="grid-row service-activity-row" *ngIf="selection.professional">
+          <div
+            *ngFor="
+              let service of selection.services;
+              let j = index;
+              let last = last
+            "
+            class="grid-container"
+          >
+            <div
+              class="grid-row service-activity-row"
+              *ngIf="selection.professional"
+            >
               <div class="form-group grid-item service">
                 <label>Serviço Técnico</label>
                 <ng-select
@@ -39,12 +54,18 @@
                 ></ng-select>
               </div>
 
-              <div class="form-group code-display grid-item service-code" *ngIf="service.service">
+              <div
+                class="form-group code-display grid-item service-code"
+                *ngIf="service.service"
+              >
                 <label>Código do Serviço Técnico</label>
                 <span>{{ service.service }}</span>
               </div>
 
-              <div class="form-group grid-item activities" *ngIf="service.service">
+              <div
+                class="form-group grid-item activities"
+                *ngIf="service.service"
+              >
                 <label>Atividades</label>
                 <ng-select
                   [items]="service.activities"
@@ -56,17 +77,28 @@
                 ></ng-select>
               </div>
 
-              <div class="form-group code-display grid-item activity-codes" *ngIf="service.activityIds?.length">
+              <div
+                class="form-group code-display grid-item activity-codes"
+                *ngIf="service.activityIds?.length"
+              >
                 <label>Códigos das Atividades</label>
                 <span>{{ getActivityCodes(service) }}</span>
               </div>
             </div>
 
             <!-- Linha 3: Quantidade, Unidade, Botões -->
-            <div class="grid-row quantity-unit-row" *ngIf="service.activityIds?.length">
+            <div
+              class="grid-row quantity-unit-row"
+              *ngIf="service.activityIds?.length"
+            >
               <div class="form-group grid-item quantity">
                 <label>Quantidade</label>
-                <input type="number" [(ngModel)]="service.quantity" min="1" step="1" />
+                <input
+                  type="number"
+                  [(ngModel)]="service.quantity"
+                  min="1"
+                  step="1"
+                />
               </div>
 
               <div class="form-group grid-item unit">
@@ -75,7 +107,12 @@
               </div>
 
               <div class="grid-item btn-group">
-                <button class="add-btn" (click)="addService(selection)" title="Adicionar serviço" *ngIf="last">
+                <button
+                  class="add-btn"
+                  (click)="addService(selection)"
+                  title="Adicionar serviço"
+                  *ngIf="last"
+                >
                   Adicionar Serviço
                 </button>
 
@@ -94,13 +131,27 @@
 
         <!-- Botão para adicionar novo profissional -->
         <div class="button-container" *ngIf="last">
-          <button class="add-professional-btn" (click)="addProfessionalSelection()">
+          <button
+            class="add-professional-btn"
+            (click)="addProfessionalSelection()"
+          >
             Adicionar Profissional
           </button>
-          <button class="remove-professional-btn" (click)="removeProfessionalSelection()">
+          <button
+            class="remove-professional-btn"
+            (click)="removeProfessionalSelection()"
+          >
             Remover Profissional
           </button>
         </div>
+      </div>
+      <div class="button-export-container">
+        <button
+          class="add-professional-btn"
+          (click)="exportToExcel()"
+        >
+          Exportar ART
+        </button>
       </div>
     </div>
   </div>

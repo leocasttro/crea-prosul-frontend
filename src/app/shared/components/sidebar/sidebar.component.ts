@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { User } from '../../../core/models/user.model';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, MatIconModule],
+  imports: [CommonModule, RouterLink, MatIconModule],
   templateUrl: './sidebar-component.html',
   styleUrls: ['./sidebar-component.scss']
 })
