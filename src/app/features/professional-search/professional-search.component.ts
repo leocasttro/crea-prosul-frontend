@@ -160,20 +160,55 @@ export class ProfessionalSearchComponent implements OnInit {
   }
 
   exportToExcel() {
+    const filteredProfessionals = this.selectedProfessionals.map((selection) => {
+      return {
+        professional: selection.professional,
+        services: selection.services.map((service) => ({
+          service: service.service,
+          quantity: service.quantity,
+          unit: service.unit,
+          description: service.description,
+          activities: service.activities.filter((a) =>
+            service.activityIds.includes(a.id)
+          )
+        })),
+      };
+    });
+
     const dialogRef = this.dialog.open(ModalComponent, {
       data: {
-        nomeEmpresa: '',
-        endereco: '',
-        cep: '',
-        telefone: '',
-        cnpj: '',
-        selectedProfessionals: this.selectedProfessionals // Passa os dados de selectedProfessionals
+        selectedProfessionals: filteredProfessionals
       },
-      width: '1300px', // Largura fixa do modal
-      maxWidth: '120vw' // Limita a largura máxima para 90% da viewport
+      width: '1300px',
+      maxWidth: '120vw'
     });
 
     dialogRef.afterClosed().subscribe((result: ModalData & { selectedProfessionals: Selection[] }) => {
+      if (result) {
+        const exportData: ArtFormExport = {
+          // Dados do formulário
+          nomeEmpresa: result.nomeEmpresa,
+          endereco: result.endereco,
+          cep: result.cep,
+          telefone: result.telefone,
+          cnpj: result.cnpj,
+          resumoContrato: result.resumoContrato,
+          resumoOrdemServico: result.resumoOrdemServico,
+          numeroContrato: result.numeroContrato,
+          numeroOrdemServico: result.numeroOrdemServico,
+          numeroServico: result.numeroServico,
+          inicio: result.inicio,
+          termino: result.termino,
+          valorObraServico: result.valorObraServico,
+          valorTotalContrato: result.valorTotalContrato,
+
+          // Dados dos profissionais
+          professionals: result.selectedProfessionals
+        };
+
+        this.excelExportService.exportArtFormToExcel(exportData);
+      }
     });
   }
+
 }

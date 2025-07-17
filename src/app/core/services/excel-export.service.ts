@@ -9,33 +9,48 @@ export class ExcelExportService {
   exportArtFormToExcel(data: ArtFormExport): void {
     const wb = XLSX.utils.book_new();
 
-    // Create a single sheet for the form data (Código_da_Atividade style)
-    const wsData = [
-      ['Profissional', 'Serviço Técnico', 'Código Serviço', 'Atividade', 'Código Atividade', 'Quantidade', 'Unidade de Medida', 'Descrição'],
-      ...data.professionals.flatMap(professional =>
-        professional.services.map(service => [
-          professional.professional?.name || '',
-          professional.technicalServices.find(ts => ts.codigoServicoTecnico === service.service)?.nomeServicoTecnico || service.service || '',
-          service.service || '',
-          service.activityIds
-            .map(id => service.activities.find(a => a.id === id)?.name)
-            .filter(name => name)
-            .join(', '),
-          service.activityIds
-            .map(id => service.activities.find(a => a.id === id)?.code)
-            .filter(code => code)
-            .join(', '),
-          service.quantity || '',
-          service.unit || '',
-          service.description || ''
-        ])
-      )
+    // Cabeçalho com dados do formulário
+    const headerData = [
+      ['Nome da Empresa:', data.nomeEmpresa],
+      ['Endereço:', data.endereco],
+      ['CEP:', data.cep],
+      ['Telefone:', data.telefone],
+      ['CNPJ:', data.cnpj],
+      ['Resumo do Contrato:', data.resumoContrato],
+      ['Resumo da OS:', data.resumoOrdemServico],
+      ['Número do Contrato:', data.numeroContrato],
+      ['Número da Ordem de Serviço:', data.numeroOrdemServico],
+      ['Número do Serviço:', data.numeroServico],
+      ['Início:', data.inicio],
+      ['Término:', data.termino],
+      ['Valor da Obra/Serviço:', data.valorObraServico],
+      ['Valor Total do Contrato:', data.valorTotalContrato],
+      [], // linha vazia
+      ['Profissional', 'Serviço Técnico', 'Código Serviço', 'Atividade', 'Código Atividade', 'Quantidade', 'Unidade de Medida', 'Descrição']
     ];
 
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    XLSX.utils.book_append_sheet(wb, ws, 'Código_da_Atividade');
+    // Dados da tabela
+    const bodyData = data.professionals.flatMap(professional =>
+      professional.services.map(service => [
+        professional.professional?.name || '',
+        service.service || '',
+        service.service || '',
+        service.activities?.map(a => a.name).join(', ') || '',
+        service.activities?.map(a => a.code).join(', ') || '',
+        service.quantity || '',
+        service.unit || '',
+        service.description || ''
+      ])
+    )
 
-    // Export the file
+    // Junta cabeçalho + corpo
+    const wsData = [...headerData, ...bodyData];
+
+    // Cria planilha
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    XLSX.utils.book_append_sheet(wb, ws, 'Exportação ART');
+
+    // Salva
     XLSX.writeFile(wb, 'ART_Test_Export.xlsx');
   }
 }

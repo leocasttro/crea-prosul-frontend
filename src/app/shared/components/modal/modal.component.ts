@@ -56,12 +56,14 @@ export class ModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('Dados recebidos no modal:', this.data);
+
     this.modalData = this.fb.group({
       nomeEmpresa: [this.data.nomeEmpresa || '', Validators.required],
       endereco: [this.data.endereco || '', Validators.required],
-      cep: [this.data.cep || '', [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
-      telefone: [this.data.telefone || '', [Validators.required, Validators.pattern(/^\(\d{2}\)\s\d{4,5}-\d{4}$/)]],
-      cnpj: [this.data.cnpj || '', [Validators.required, Validators.pattern(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/)]],
+      cep: [this.data.cep || ''],
+      telefone: [this.data.telefone || ''],
+      cnpj: [this.data.cnpj || ''],
       resumoContrato: [this.data.resumoContrato || '', Validators.required],
       resumoOrdemServico: [this.data.resumoOrdemServico || '', Validators.required],
       numeroContrato: [this.data.numeroContrato || '', Validators.required],
@@ -69,8 +71,8 @@ export class ModalComponent implements OnInit {
       numeroServico: [this.data.numeroServico || '', Validators.required],
       inicio: [this.data.inicio || '', Validators.required],
       termino: [this.data.termino || '', Validators.required],
-      valorObraServico: [this.data.valorObraServico || null, [Validators.required, Validators.min(0)]],
-      valorTotalContrato: [this.data.valorTotalContrato || null, [Validators.required, Validators.min(0)]]
+      valorObraServico: [this.data.valorObraServico || null],
+      valorTotalContrato: [this.data.valorTotalContrato || null]
     });
   }
 
