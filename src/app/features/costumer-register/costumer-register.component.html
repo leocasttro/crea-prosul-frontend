@@ -2,33 +2,62 @@
   <div class="costumer-register">
     <h2>Cadastrar Cliente</h2>
 
-    <form (ngSubmit)="onSubmit()" class="form-container">
+    <form
+      [formGroup]="costumerForm"
+      (ngSubmit)="onSubmit()"
+      class="form-container"
+    >
       <div class="form-row">
         <div class="form-group">
           <label for="cliente">Cliente</label>
-          <input type="text" id="cliente" formControlName="cliente" placeholder="Digite o nome do cliente">
+          <input
+            type="text"
+            id="cliente"
+            formControlName="cliente"
+            placeholder="Digite o nome do cliente"
+          />
         </div>
         <div class="form-group">
           <label for="endereco">Endereço</label>
-          <input type="text" id="endereco" formControlName="endereco" placeholder="Digite o endereço">
+          <input
+            type="text"
+            id="endereco"
+            formControlName="endereco"
+            placeholder="Digite o endereço"
+          />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="cep">CEP</label>
-          <input type="text" id="cep" formControlName="cep" placeholder="Digite o CEP do cliente">
+          <input
+            type="text"
+            id="cep"
+            formControlName="cep"
+            placeholder="Digite o CEP do cliente"
+          />
         </div>
         <div class="form-group">
           <label for="telefone">Telefone</label>
-          <input type="text" id="telefone" formControlName="telefone" placeholder="Digite o telefone">
+          <input
+            type="text"
+            id="telefone"
+            formControlName="telefone"
+            placeholder="Digite o telefone"
+          />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="cnpj">CNPJ</label>
-          <input type="tel" id="cnpj" formControlName="cnpj" placeholder="Digite o CNPJ">
+          <input
+            type="tel"
+            id="cnpj"
+            formControlName="cnpj"
+            placeholder="Digite o CNPJ"
+          />
         </div>
       </div>
 
@@ -38,7 +67,5 @@
         </div>
       </div>
     </form>
-
-    <p>Dados do formulário: {{ costumerForm.value }}</p>
   </div>
 </div>

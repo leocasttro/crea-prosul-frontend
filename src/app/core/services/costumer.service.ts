@@ -13,4 +13,8 @@ export class CostumerService {
   getCostumer(): Observable<Costumer[]> {
     return this.http.get<Costumer[]>(`${this.baseUrl}/costumer/getAllCostumer`)
   }
+
+  createCostumer(costumer: Costumer): Observable<Costumer> {
+    return this.http.post<Costumer>(`${this.baseUrl}/costumer/createCostumer`, costumer);
+  }
 }
