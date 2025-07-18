@@ -185,6 +185,7 @@ export class ProfessionalSearchComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: ModalData & { selectedProfessionals: Selection[] }) => {
       if (result) {
+        console.log(result)
         const exportData: ArtFormExport = {
           // Dados do formulário
           nomeEmpresa: result.nomeEmpresa,
@@ -201,6 +202,13 @@ export class ProfessionalSearchComponent implements OnInit {
           termino: result.termino,
           valorObraServico: result.valorObraServico,
           valorTotalContrato: result.valorTotalContrato,
+          coordenadorProjeto: 'teste',
+          nomeEmpresaObra: result.nomeEmpresaObra,
+          enderecoObra: result.enderecoObra,
+          cepObra: result.cepObra,
+          telefoneObra: result.telefoneObra,
+          cnpjObra: result.cnpjObra,
+          quantidade: 'teste',
 
           // Dados dos profissionais
           professionals: result.selectedProfessionals

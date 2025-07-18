@@ -2,6 +2,13 @@ import { Professional } from './professional.model';
 import { TechnicalService } from './technical-service.model';
 
 export interface ArtFormExport {
+  coordenadorProjeto: string
+  nomeEmpresaObra: string
+  enderecoObra: string
+  cepObra: string
+  telefoneObra: string
+  cnpjObra: string
+  quantidade: string
   nomeEmpresa: string;
   endereco: string;
   cep: string;
