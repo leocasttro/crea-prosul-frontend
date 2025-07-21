@@ -62,7 +62,7 @@ h2 {
 
 .grid-row.quantity-unit-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 10fr; /* Quatro colunas: Quantidade, Unidade, Botão */
+  grid-template-columns: 1fr 2fr 10fr; /* Quatro colunas: Quantidade, Unidade, Botão */
   gap: 15px;
   align-items: flex-end;
 }

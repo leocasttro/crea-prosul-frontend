@@ -96,6 +96,14 @@ h2 {
   }
 }
 
+.formation {
+  margin-top: 5px;
+
+  label {
+    margin-bottom: 11px;
+  }
+}
+
 /* Posicionamento explícito para alinhar as colunas corretamente */
 .form-group:nth-child(1) { grid-column: 1; } /* Nome */
 .form-group:nth-child(2) { grid-column: 2; } /* Nº do Registro */

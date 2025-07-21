@@ -1,5 +1,6 @@
 export interface TechnicalService {
   id: number;
+  servicoId: number;
   codigoServicoTecnico: string;
   nomeServicoTecnico: string;
   activities: Activity[];

@@ -3,31 +3,41 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ProfessionalService } from "../../core/services/professional.service";
 import { Professional } from "../../core/models/professional.model";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @Component({
   selector: 'app-professional-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgSelectModule],
   templateUrl: './professional-register.component.html',
   styleUrls: ['./professional-register.component.scss']
 })
 export class ProfessionalRegisterComponent implements OnInit {
   professionalForm!: FormGroup;
+  formations: { id: number; nome: string }[] = [];
 
   constructor(private fb: FormBuilder, private professionalService: ProfessionalService) {}
 
   ngOnInit(): void {
     this.professionalForm = this.fb.group({
-      nome: ['', Validators.required],
-      registro: ['', Validators.required],
-      formacao: ['', Validators.required],
+      name: ['', Validators.required],
+      registrationNumber: ['', Validators.required],
+      formationId: [null, Validators.required],
       cpf: ['', Validators.required],
-      email: ['', Validators.required],
-      telefone: ['', Validators.required],
+      contactEmail: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
     });
+    this.getFormation()
   }
 
+getFormation() {
+  this.professionalService.getFormation().subscribe((data) => {
+    this.formations = data;
+  });
+}
+
   onSubmit(): void {
+    console.log(this.professionalForm)
     if (this.professionalForm.valid) {
       const professionalData: Professional = this.professionalForm.value;
       this.professionalService.createProfessional(professionalData).subscribe({

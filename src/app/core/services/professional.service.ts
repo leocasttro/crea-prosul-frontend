@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, of, throwError } from 'rxjs';
-import { Professional } from '../models/professional.model';
+import { Formation, Professional } from '../models/professional.model';
 import { environment } from '../../../environments/environment';
 import { TechnicalService } from '../models/technical-service.model';
+import { Units } from '../models/units.model';
 
 export interface Activity {
   id: number;
@@ -19,6 +20,10 @@ export class ProfessionalService {
 
   constructor(private http: HttpClient) {}
 
+
+  getUnits(): Observable<Units[]> {
+    return this.http.get<Units[]>(`${this.baseUrl}/units/allUnit`)
+  }
   /**
    * Busca todos os profissionais.
    */
@@ -32,12 +37,16 @@ export class ProfessionalService {
     );
   }
 
+  getFormation(): Observable<Formation[]> {
+    return this.http.get<Formation[]>(`${this.baseUrl}/professionals/getAllFormation`)
+  }
+
   getActivitiesByService(serviceId: number): Observable<Activity[]> {
     return this.http.get<Activity[]>(`${this.baseUrl}/formation-service-activities/byService/${serviceId}/activities`)
   }
 
   createProfessional(professional: Professional): Observable<Professional> {
-    return this.http.post<Professional>(`${this.baseUrl}/professionals/createProfessionals`, professional)
+    return this.http.post<Professional>(`${this.baseUrl}/professionals/createProfessional`, professional)
   }
 
   updateProfessional(professionalId: number | any, professional: Professional): Observable<Professional> {

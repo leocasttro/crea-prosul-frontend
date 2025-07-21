@@ -19,6 +19,35 @@
     margin-bottom: 20px;
   }
 
+  .selecion-row {
+    padding: 15px;
+    background-color: #f3f6f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    ng-select {
+      width: 100%;
+    }
+
+    ::ng-deep .ng-select-container {
+      height: 48px;
+      border-radius: 6px;
+      border-color: #d1d5db; // cinza suave
+      box-shadow: none;
+      transition: border-color 0.3s ease;
+
+      &:hover {
+        border-color: #3f51b5;
+      }
+    }
+
+    ::ng-deep .ng-select.ng-select-focused .ng-select-container {
+      border-color: #3f51b5;
+      box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+    }
+  }
+
   .local-obra {
     grid-template-columns: repeat(3, 1fr);
     .nome-empresa {

@@ -7,7 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ArtFormExport } from '../../core/models/art.model';
 import { ExcelExportService } from '../../core/services/excel-export.service';
-import { ModalComponent, ModalData } from '../../shared/components/modal/modal.component';
+import {
+  ModalComponent,
+  ModalData,
+} from '../../shared/components/modal/modal.component';
 import { MatDialog } from '@angular/material/dialog';
 
 interface Activity {
@@ -42,17 +45,29 @@ export class ProfessionalSearchComponent implements OnInit {
   professionals: Professional[] = [];
   selectedProfessionals: Selection[] = [];
   maxSelections: number = 6;
+  units: { codigo: string; descricao: string }[] = [];
 
-  constructor(private professionalService: ProfessionalService, private excelExportService: ExcelExportService, private dialog: MatDialog) {}
+  constructor(
+    private professionalService: ProfessionalService,
+    private excelExportService: ExcelExportService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.selectedProfessionals = [this.createEmptySelection()];
     this.loadProfessionals();
+    this.getUnits();
   }
 
   loadProfessionals() {
     this.professionalService.search().subscribe((data) => {
       this.professionals = data;
+    });
+  }
+
+  getUnits() {
+    this.professionalService.getUnits().subscribe((data) => {
+      this.units = data;
     });
   }
 
@@ -101,7 +116,7 @@ export class ProfessionalSearchComponent implements OnInit {
 
     if (selectedService) {
       this.professionalService
-        .getActivitiesByService(selectedService.id)
+        .getActivitiesByService(selectedService.servicoId)
         .subscribe((res) => {
           service.activities = res.map((item: any) => ({
             id: Number(item.codigoAtividade),
@@ -111,7 +126,6 @@ export class ProfessionalSearchComponent implements OnInit {
         });
     }
   }
-
 
   getActivityCodes(service: Service): string {
     if (!service.activities || !service.activityIds?.length) return '';
@@ -139,7 +153,9 @@ export class ProfessionalSearchComponent implements OnInit {
     if (selection.services.length < 6) {
       selection.services.push(this.createEmptyService());
     } else {
-      alert('Você atingiu o limite máximo de 6 serviços para este profissional!');
+      alert(
+        'Você atingiu o limite máximo de 6 serviços para este profissional!'
+      );
     }
   }
 
@@ -160,63 +176,67 @@ export class ProfessionalSearchComponent implements OnInit {
   }
 
   exportToExcel() {
-    const filteredProfessionals = this.selectedProfessionals.map((selection) => {
-      return {
-        professional: selection.professional,
-        services: selection.services.map((service) => ({
-          service: service.service,
-          quantity: service.quantity,
-          unit: service.unit,
-          description: service.description,
-          activities: service.activities.filter((a) =>
-            service.activityIds.includes(a.id)
-          )
-        })),
-      };
-    });
+    const filteredProfessionals = this.selectedProfessionals.map(
+      (selection) => {
+        return {
+          professional: selection.professional,
+          services: selection.services.map((service) => ({
+            service: service.service,
+            quantity: service.quantity,
+            unit: service.unit,
+            description: service.description,
+            activities: service.activities.filter((a) =>
+              service.activityIds.includes(a.id)
+            ),
+          })),
+        };
+      }
+    );
 
     const dialogRef = this.dialog.open(ModalComponent, {
       data: {
-        selectedProfessionals: filteredProfessionals
+        selectedProfessionals: filteredProfessionals,
       },
       width: '1300px',
-      maxWidth: '120vw'
+      maxWidth: '120vw',
     });
 
-    dialogRef.afterClosed().subscribe((result: ModalData & { selectedProfessionals: Selection[] }) => {
-      if (result) {
-        console.log(result)
-        const exportData: ArtFormExport = {
-          // Dados do formulário
-          nomeEmpresa: result.nomeEmpresa,
-          endereco: result.endereco,
-          cep: result.cep,
-          telefone: result.telefone,
-          cnpj: result.cnpj,
-          resumoContrato: result.resumoContrato,
-          resumoOrdemServico: result.resumoOrdemServico,
-          numeroContrato: result.numeroContrato,
-          numeroOrdemServico: result.numeroOrdemServico,
-          numeroServico: result.numeroServico,
-          inicio: result.inicio,
-          termino: result.termino,
-          valorObraServico: result.valorObraServico,
-          valorTotalContrato: result.valorTotalContrato,
-          coordenadorProjeto: 'teste',
-          nomeEmpresaObra: result.nomeEmpresaObra,
-          enderecoObra: result.enderecoObra,
-          cepObra: result.cepObra,
-          telefoneObra: result.telefoneObra,
-          cnpjObra: result.cnpjObra,
-          quantidade: 'teste',
+    dialogRef
+      .afterClosed()
+      .subscribe(
+        (result: ModalData & { selectedProfessionals: Selection[] }) => {
+          if (result) {
+            const exportData: ArtFormExport = {
+              // Dados do formulário
+              nomeEmpresa: result.nomeEmpresa,
+              endereco: result.endereco,
+              cep: result.cep,
+              telefone: result.telefone,
+              cnpj: result.cnpj,
+              resumoContrato: result.resumoContrato,
+              resumoOrdemServico: result.resumoOrdemServico,
+              numeroContrato: result.numeroContrato,
+              numeroOrdemServico: result.numeroOrdemServico,
+              numeroServico: result.numeroServico,
+              inicio: result.inicio,
+              termino: result.termino,
+              valorObraServico: result.valorObraServico,
+              valorTotalContrato: result.valorTotalContrato,
+              coordenadorProjeto: 'teste',
+              nomeEmpresaObra: result.nomeEmpresaObra,
+              enderecoObra: result.enderecoObra,
+              cepObra: result.cepObra,
+              telefoneObra: result.telefoneObra,
+              cnpjObra: result.cnpjObra,
+              quantidade: 'teste',
 
-          // Dados dos profissionais
-          professionals: result.selectedProfessionals
-        };
+              // Dados dos profissionais
+              professionals: result.selectedProfessionals,
+            };
 
-        this.excelExportService.exportArtFormToExcel(exportData);
-      }
-    });
+            this.excelExportService.exportArtFormToExcel(exportData);
+          }
+        }
+      );
   }
-
 }

@@ -103,7 +103,14 @@
 
               <div class="form-group grid-item unit">
                 <label>Unidade de Medida</label>
-                <input type="text" [(ngModel)]="service.unit" />
+                <ng-select
+                  [items]="units"
+                  bindLabel="descricao"
+                  bindValue="codigo"
+                  [(ngModel)]="service.unit"
+                  placeholder="Selecione a unidade"
+                >
+                </ng-select>
               </div>
 
               <div class="grid-item btn-group">
@@ -146,10 +153,7 @@
         </div>
       </div>
       <div class="button-export-container">
-        <button
-          class="add-professional-btn"
-          (click)="exportToExcel()"
-        >
+        <button class="add-professional-btn" (click)="exportToExcel()">
           Solicitar ART
         </button>
       </div>
