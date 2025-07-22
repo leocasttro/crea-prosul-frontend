@@ -106,7 +106,7 @@ export class ExcelExportService {
       prof.services.map(service => [
         (prof.professional?.name || '').toString(),
         (service.service || '').toString(),
-        (service.service || '').toString(),
+        (service.codigoServico || '').toString(),
         (service.activities?.map(a => a.name).join(', ') || '').toString(),
         (service.activities?.map(a => a.code).join(', ') || '').toString(),
         (service.quantity !== undefined && service.quantity !== null ? service.quantity.toString() : ''),

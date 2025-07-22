@@ -35,6 +35,7 @@ export interface ProfessionalSelection {
 
 export interface Service {
   service: string | null;
+  codigoServico: string | null;
   activities: Activity[];
   activityIds: number[];
   quantity: number | null;

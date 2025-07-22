@@ -12,7 +12,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ExcelExportService } from '../../../core/services/excel-export.service';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { CostumerService } from '../../../core/services/costumer.service';
 import { Costumer } from '../../../core/models/costumer.model';
@@ -33,12 +32,12 @@ export interface ModalData {
   valorObraServico: number;
   valorTotalContrato: number;
   selectedProfessionals?: any;
-  nomeEmpresaObra: string,
-  enderecoObra: string,
-  cepObra: string,
-  telefoneObra: string,
-  cnpjObra: string,
-  quantidade: string
+  nomeEmpresaObra: string;
+  enderecoObra: string;
+  cepObra: string;
+  telefoneObra: string;
+  cnpjObra: string;
+  quantidade: string;
 }
 
 @Component({
@@ -71,7 +70,6 @@ export class ModalComponent implements OnInit {
 
   loadCostumer() {
     this.costumerService.getCostumer().subscribe((data) => {
-      console.log(data);
       this.costumers = data;
     });
   }
@@ -90,7 +88,8 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCostumer();
-    console.log('Dados recebidos no modal:', this.data);
+    // **PONTO DE CORREÇÃO 1**: Log para verificar os dados recebidos
+    console.log('Dados recebidos no modal:', this.data.selectedProfessionals);
 
     this.modalData = this.fb.group({
       nomeEmpresa: [this.data.nomeEmpresa || '', Validators.required],
@@ -107,29 +106,34 @@ export class ModalComponent implements OnInit {
       termino: [this.data.termino || '', Validators.required],
       valorObraServico: [this.data.valorObraServico || null],
       valorTotalContrato: [this.data.valorTotalContrato || null],
-
-      // Campos da obra que estavam faltando:
       nomeEmpresaObra: [''],
       enderecoObra: [''],
       cepObra: [''],
       telefoneObra: [''],
       cnpjObra: [''],
-      quantidade: ['']
+      quantidade: [''],
     });
-
   }
 
   onSubmit(): void {
+    // **PONTO DE CORREÇÃO 2**: Adicionar validação e mensagem de erro
     if (this.modalData.valid) {
       const formData: ModalData = {
         ...this.modalData.value,
         selectedProfessionals: this.data.selectedProfessionals,
       };
+      console.log('Formulário enviado:', this.modalData.value);
+      console.log('selectedProfessionals:', this.data.selectedProfessionals);
       this.dialogRef.close(formData);
+    } else {
+      console.log('Formulário inválido:', this.modalData.errors);
+      alert('Por favor, preencha todos os campos obrigatórios antes de enviar.');
     }
   }
 
   onCancel(): void {
+    // **PONTO DE CORREÇÃO 3**: Log para verificar fechamento sem dados
+    console.log('Modal fechado sem dados');
     this.dialogRef.close();
   }
 }
