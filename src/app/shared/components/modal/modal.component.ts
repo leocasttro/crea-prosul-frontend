@@ -88,9 +88,6 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCostumer();
-    // **PONTO DE CORREÇÃO 1**: Log para verificar os dados recebidos
-    console.log('Dados recebidos no modal:', this.data.selectedProfessionals);
-
     this.modalData = this.fb.group({
       nomeEmpresa: [this.data.nomeEmpresa || '', Validators.required],
       endereco: [this.data.endereco || '', Validators.required],
@@ -116,17 +113,13 @@ export class ModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // **PONTO DE CORREÇÃO 2**: Adicionar validação e mensagem de erro
     if (this.modalData.valid) {
       const formData: ModalData = {
         ...this.modalData.value,
         selectedProfessionals: this.data.selectedProfessionals,
       };
-      console.log('Formulário enviado:', this.modalData.value);
-      console.log('selectedProfessionals:', this.data.selectedProfessionals);
       this.dialogRef.close(formData);
     } else {
-      console.log('Formulário inválido:', this.modalData.errors);
       alert('Por favor, preencha todos os campos obrigatórios antes de enviar.');
     }
   }

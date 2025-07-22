@@ -38,7 +38,6 @@ getFormation() {
 }
 
   onSubmit(): void {
-    console.log(this.professionalForm)
     if (this.professionalForm.valid) {
       const professionalData: Professional = this.professionalForm.value;
       this.professionalService.createProfessional(professionalData).subscribe({
@@ -53,11 +52,9 @@ getFormation() {
             message: err.message,
             error: err.error,
           });
-          alert('Erro ao cadastar professional')
+          this.toastr.error('Erro ao tentar cadastrar!', 'Error');
         },
       });
-    } else {
-      alert('Preencha todos os dados');
     }
   }
 }

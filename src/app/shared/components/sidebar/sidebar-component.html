@@ -1,19 +1,28 @@
-<nav class="sidebar" [ngClass]="{ 'collapsed': isCollapsed, 'no-shadow': hasActiveItem }">
+<nav
+  class="sidebar"
+  [ngClass]="{ 'collapsed': isCollapsed, 'no-shadow': hasActiveItem }"
+>
   <div class="sidebar-header">
-    <button mat-icon-button (click)="toggleSidebar()" class="hamburger-btn" *ngIf="isCollapsed">
+    <button
+      mat-icon-button
+      (click)="toggleSidebar()"
+      class="hamburger-btn"
+      *ngIf="isCollapsed"
+    >
       <mat-icon>{{ isCollapsed ? 'menu_open' : 'menu' }}</mat-icon>
     </button>
 
     <!--  -->
-    <h2>CREA</h2>
+    <div class="logo">
+            <h2>CREA</h2>
+      <img [src]="'/logo.png'" alt="" />
+    </div>
     <div class="closed-btn" *ngIf="!isCollapsed" (click)="toggleSidebar()">
       <button class="closed">
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <!-- <img [src]="'/logo.png'" alt=""> -->
   </div>
-
   <ul class="nav-list">
     <li *ngFor="let item of navItems" class="nav-item">
       <a [routerLink]="item.path" [class.active]="isNavItemActive(item.path)">
@@ -25,18 +34,24 @@
 
   <div class="user-profile">
     @if (user) {
-      <div class="profile-content">
-        <img [src]="'/users/user.png'" alt="Foto de perfil" class="profile-image" />
-        <span class="user-name" *ngIf="!isCollapsed">{{ user.username || 'Usuário' }}</span>
-        <button mat-button color="primary" (click)="logout()" class="logout-btn">
-          <mat-icon>logout</mat-icon>
-        </button>
-      </div>
+    <div class="profile-content">
+      <img
+        [src]="'/users/user.png'"
+        alt="Foto de perfil"
+        class="profile-image"
+      />
+      <span class="user-name" *ngIf="!isCollapsed"
+        >{{ user.username || 'Usuário' }}</span
+      >
+      <button mat-button color="primary" (click)="logout()" class="logout-btn">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
     } @else {
-      <p *ngIf="!isCollapsed">Usuário não autenticado</p>
-      <a [routerLink]="['/login']" class="login-link">
-        <i class="material-icons">login</i>
-      </a>
+    <p *ngIf="!isCollapsed">Usuário não autenticado</p>
+    <a [routerLink]="['/login']" class="login-link">
+      <i class="material-icons">login</i>
+    </a>
     }
   </div>
 </nav>

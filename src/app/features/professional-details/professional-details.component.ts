@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Professional } from '../../core/models/professional.model';
 import { ProfessionalService } from '../../core/services/professional.service';
+import { ToastrService } from "ngx-toastr";
+
 
 @Component({
   selector: 'app-professional-details',
@@ -19,7 +21,8 @@ export class ProfessionalDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private professionalService: ProfessionalService
+    private professionalService: ProfessionalService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -42,6 +45,7 @@ export class ProfessionalDetailsComponent implements OnInit {
       this.professional = { ...this.editedProfessional };
       this.professionalService.updateProfessional(this.professional.id, this.editedProfessional).subscribe({
         next: () => {
+          this.toastr.info('Usuário atualizado com sucesso')
           this.isEditing = false;
           this.editedProfessional;
         },
@@ -59,6 +63,7 @@ export class ProfessionalDetailsComponent implements OnInit {
     if (this.professional && confirm('Tem certeza que deseja excluir este profissional?')) {
       this.professionalService.deleteProfessional(this.professional.id).subscribe({
         next: () => {
+          this.toastr.show('Profissional excluido com sucesso!')
           this.professional = undefined;
         },
         error: (err) => console.error('Error deleting professional:', err)
