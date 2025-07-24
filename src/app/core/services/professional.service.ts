@@ -64,4 +64,9 @@ export class ProfessionalService {
   deleteProfessional(professionalId: number | any): Observable<Professional> {
     return this.http.delete<Professional>(`${this.baseUrl}/professionals/deleteProfessional/${professionalId}`)
   }
+
+
+  getAllProfessionals(): Observable<{id: string}[]> {
+    return this.http.get<{id: string}[]>(`${this.baseUrl}/professionals/getAllProfessionals`)
+  }
 }
