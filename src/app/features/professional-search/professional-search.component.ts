@@ -142,11 +142,7 @@ export class ProfessionalSearchComponent implements OnInit {
   }
 
   addProfessionalSelection() {
-    if (this.selectedProfessionals.length < this.maxSelections) {
-      this.selectedProfessionals.push(this.createEmptySelection());
-    } else {
-      alert('Você atingiu o limite máximo de profissionais (6)!');
-    }
+    this.selectedProfessionals.push(this.createEmptySelection());
   }
 
   removeProfessionalSelection() {
