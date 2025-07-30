@@ -157,3 +157,68 @@
   font-size: 0.75rem;
   color: #4a90e2;
 }
+
+/* ng-select styles to match input */
+.input-container ng-select {
+  width: 76%;
+}
+
+.input-container .ng-select .ng-select-container {
+  padding: 1rem 1rem 0.5rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  background: #fff;
+  min-height: unset;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-container .ng-select.ng-select-focused .ng-select-container {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.input-container .ng-select.ng-select-filled .ng-select-container::after,
+.input-container .ng-select.ng-select-focused .ng-select-container::after {
+  content: '';
+  position: absolute;
+  top: -0.6rem;
+  left: 0.9rem;
+  background-color: #fff;
+  padding: 0 0.4rem;
+  font-size: 0.75rem;
+  color: #4a90e2;
+}
+
+.input-container .ng-select.ng-select-filled + label,
+.input-container .ng-select.ng-select-focused + label {
+  top: -0.6rem;
+  left: 0.9rem;
+  background-color: #fff;
+  padding: 0 0.4rem;
+  font-size: 0.75rem;
+  color: #4a90e2;
+}
+
+/* Ensure dropdown arrow aligns with input style */
+.input-container .ng-select .ng-arrow-wrapper .ng-arrow {
+  border-color: #555 transparent transparent;
+}
+
+/* Adjust dropdown menu to match input style */
+.ng-dropdown-panel {
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.ng-dropdown-panel .ng-option {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.ng-dropdown-panel .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-option.ng-option-marked {
+  background-color: rgba(74, 144, 226, 0.1);
+  color: #333;
+}

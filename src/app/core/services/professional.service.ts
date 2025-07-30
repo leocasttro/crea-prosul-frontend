@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, of, throwError } from 'rxjs';
-import { Formation, Professional } from '../models/professional.model';
+import { Formation, Professional, ProfessionalUpdate } from '../models/professional.model';
 import { environment } from '../../../environments/environment';
 import { TechnicalService } from '../models/technical-service.model';
 import { Units } from '../models/units.model';
@@ -49,16 +49,8 @@ export class ProfessionalService {
     return this.http.post<Professional>(`${this.baseUrl}/professionals/createProfessional`, professional)
   }
 
-  updateProfessional(professionalId: number | any, professional: Professional): Observable<Professional> {
-    return this.http.put<Professional>(`${this.baseUrl}/professionals/updateProfessional/${professionalId}`, professional).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error('Erro completo:', error);
-        if (error.status === 401) {
-          console.error('Acesso não autorizado. Verifique o token ou permissões.');
-        }
-        return throwError(() => new Error('Erro ao atualizar profissional: ' + error.message));
-      })
-    );
+  updateProfessional(professionalId: number | any, professional: ProfessionalUpdate): Observable<Professional> {
+    return this.http.put<Professional>(`${this.baseUrl}/professionals/updateProfessional/${professionalId}`, professional)
   }
 
   deleteProfessional(professionalId: number | any): Observable<Professional> {

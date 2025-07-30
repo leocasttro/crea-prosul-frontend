@@ -12,3 +12,13 @@ export interface Professional {
   contactEmail?: string;
   phoneNumber?: string;
 }
+
+export interface ProfessionalUpdate {
+  id?: number;
+  name?: string;
+  registrationNumber?: string;
+  cpf?: string;
+  contactEmail?: string;
+  phoneNumber?: string;
+  formationId?: number
+}

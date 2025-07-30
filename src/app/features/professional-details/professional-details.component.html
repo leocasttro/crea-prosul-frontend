@@ -70,12 +70,14 @@
             <div class="data-item">
               <div class="input-container">
                 <label for="formation">Formação</label>
-                <input
-                  type="text"
-                  id="formation"
-                  [(ngModel)]="editedProfessional.formation.nome"
-                  placeholder="Digite a formação"
-                />
+                <ng-select
+                  [items]="formations"
+                  bindLabel="nome"
+                  bindValue="id"
+                  [(ngModel)]="editedProfessional.formation.id"
+                  placeholder="Selecione a formação"
+                >
+                </ng-select>
               </div>
             </div>
           </div>
