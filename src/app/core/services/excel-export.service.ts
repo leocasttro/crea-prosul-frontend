@@ -99,12 +99,13 @@ export class ExcelExportService {
 
     // Segunda aba
     const wsData2: string[][] = [
-      ['Profissional', 'Serviço Técnico', 'Código Serviço', 'Atividade', 'Código Atividade', 'Quantidade', 'Unidade de Medida', 'Descrição'],
+      ['Profissional', 'CREA', 'Serviço Técnico', 'Código Serviço', 'Atividade', 'Código Atividade', 'Quantidade', 'Unidade de Medida', 'Descrição'],
     ];
 
     const bodyData: string[][] = data.professionals.flatMap(prof =>
       prof.services.map(service => [
         (prof.professional?.name || '').toString(),
+        (prof.professional?.registrationNumber || '').toString(),
         (service.service || '').toString(),
         (service.codigoServico || '').toString(),
         (service.activities?.map(a => a.name).join(', ') || '').toString(),
