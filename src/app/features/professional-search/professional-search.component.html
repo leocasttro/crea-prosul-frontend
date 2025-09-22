@@ -51,6 +51,8 @@
                   [(ngModel)]="service.service"
                   placeholder="Selecione um serviço técnico"
                   (change)="onServiceChange(service, selection)"
+                  [matTooltip]="getServiceNameForTooltip(service, selection)"
+                  matTooltipPosition="above"
                 ></ng-select>
               </div>
 

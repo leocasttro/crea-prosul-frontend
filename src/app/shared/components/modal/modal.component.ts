@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgSelectComponent } from '@ng-select/ng-select';
+import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
 import { CostumerService } from '../../../core/services/costumer.service';
 import { Costumer } from '../../../core/models/costumer.model';
 
@@ -54,7 +54,7 @@ export interface ModalData {
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NgSelectComponent,
+    NgSelectModule,
   ],
 })
 export class ModalComponent implements OnInit {

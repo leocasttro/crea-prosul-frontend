@@ -12,6 +12,7 @@ import {
   ModalData,
 } from '../../shared/components/modal/modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface Activity {
   id: number;
@@ -37,7 +38,7 @@ interface Selection {
 @Component({
   selector: 'app-professional-search',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgSelectModule],
+  imports: [CommonModule, FormsModule, NgSelectModule, MatTooltipModule],
   templateUrl: './professional-search.component.html',
   styleUrls: ['./professional-search.component.scss'],
 })
@@ -88,6 +89,16 @@ export class ProfessionalSearchComponent implements OnInit {
       unit: null,
       description: null,
     };
+  }
+
+  getServiceNameForTooltip(service: any, selection: any): string {
+    if (!service || !service.service || !selection.technicalServices) {
+      return '';
+    }
+    const foundService = selection.technicalServices.find(
+      (s: any) => s.codigoServicoTecnico === service.service
+    );
+    return foundService ? foundService.nomeServicoTecnico : '';
   }
 
   onProfessionalChange(selection: Selection) {
