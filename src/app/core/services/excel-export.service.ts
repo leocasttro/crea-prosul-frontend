@@ -44,8 +44,8 @@ export class ExcelExportService {
       ['Nº da Ordem de Serviço:', data.numeroOrdemServico || '', '', ''],
       ['Nº do Serviço:', data.numeroServico || '', '', ''],
       ['Início:', data.inicio || '', 'Término:', data.termino || ''],
-      ['Valor da Obra/Serviço:', data.valorObraServico || '', '', ''],
-      ['Valor Total do Contrato:', data.valorTotalContrato || '', '', ''],
+      ['Valor da Obra/Serviço:', `R$ ${data.valorObraServico}` || '', '', ''],
+      ['Valor Total do Contrato:', `R$ ${data.valorTotalContrato}` || '', '', ''],
       [],
     ];
     const ws = XLSX.utils.aoa_to_sheet(wsData);
