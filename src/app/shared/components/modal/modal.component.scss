@@ -110,3 +110,21 @@
     padding: 8px 16px;
   }
 }
+
+/* 🔥 FORÇA renderização do Angular Material (MDC) */
+.mat-mdc-form-field {
+  display: block !important;
+  width: 100% !important;
+}
+
+.mat-mdc-text-field-wrapper {
+  width: 100% !important;
+}
+
+.mat-mdc-form-field-infix {
+  min-height: 56px !important;
+}
+
+.mat-mdc-select {
+  display: block !important;
+}

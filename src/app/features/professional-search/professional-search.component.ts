@@ -11,7 +11,7 @@ import {
   ModalComponent,
   ModalData,
 } from '../../shared/components/modal/modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface Activity {
@@ -38,7 +38,7 @@ interface Selection {
 @Component({
   selector: 'app-professional-search',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgSelectModule, MatTooltipModule],
+  imports: [CommonModule, FormsModule, NgSelectModule, MatTooltipModule, MatDialogModule],
   templateUrl: './professional-search.component.html',
   styleUrls: ['./professional-search.component.scss'],
 })
@@ -229,28 +229,28 @@ export class ProfessionalSearchComponent implements OnInit {
         );
         if (result) {
           const exportData: ArtFormExport = {
-            nomeEmpresa: result.nomeEmpresa,
-            endereco: result.endereco,
-            cep: result.cep,
-            telefone: result.telefone,
-            cnpj: result.cnpj,
-            resumoContrato: result.resumoContrato,
-            resumoOrdemServico: result.resumoOrdemServico,
-            numeroContrato: result.numeroContrato,
-            numeroOrdemServico: result.numeroOrdemServico,
-            numeroServico: result.numeroServico,
-            inicio: result.inicio,
-            termino: result.termino,
-            valorObraServico: result.valorObraServico,
-            valorTotalContrato: result.valorTotalContrato,
+            nomeEmpresa: result.nomeEmpresa ?? '',
+            endereco: result.endereco ?? '',
+            cep: result.cep ?? '',
+            telefone: result.telefone ?? '',
+            cnpj: result.cnpj ?? '',
+            resumoContrato: result.resumoContrato ?? '',
+            resumoOrdemServico: result.resumoOrdemServico ?? '',
+            numeroContrato: result.numeroContrato  ?? '',
+            numeroOrdemServico: result.numeroOrdemServico  ?? '',
+            numeroServico: result.numeroServico ?? '',
+            inicio: result.inicio ?? '',
+            termino: result.termino ?? '',
+            valorObraServico: result.valorObraServico ?? 0,
+            valorTotalContrato: result.valorTotalContrato ?? 0,
             coordenadorProjeto: 'teste',
-            nomeEmpresaObra: result.nomeEmpresaObra,
-            enderecoObra: result.enderecoObra,
-            cepObra: result.cepObra,
-            telefoneObra: result.telefoneObra,
-            cnpjObra: result.cnpjObra,
-            quantidade: result.quantidade,
-            professionals: result.selectedProfessionals, // Usa os dados retornados do modal
+            nomeEmpresaObra: result.nomeEmpresaObra ?? '',
+            enderecoObra: result.enderecoObra ?? '',
+            cepObra: result.cepObra ?? '',
+            telefoneObra: result.telefoneObra ?? '',
+            cnpjObra: result.cnpjObra ?? '',
+            quantidade: result.quantidade ?? '',
+            professionals: result.selectedProfessionals,
           };
 
           this.excelExportService.exportArtFormToExcel(exportData);

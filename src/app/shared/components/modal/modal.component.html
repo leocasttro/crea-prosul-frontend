@@ -5,44 +5,62 @@
       <!-- Seção: Local da Obra/Serviço -->
       <h4>Dados do Contrato/Contratante</h4>
       <div class="grid-container local-obra">
-        <mat-form-field appearance="fill" class="grid-item nome-empresa">
+        <mat-form-field appearance="outline" class="grid-item nome-empresa">
           <mat-label>Nome da Empresa</mat-label>
           <input matInput formControlName="nomeEmpresa" required />
         </mat-form-field>
-        <mat-form-field appearance="fill" class="grid-item endereco">
+        <mat-form-field appearance="outline" class="grid-item endereco">
           <mat-label>Endereço</mat-label>
           <input matInput formControlName="endereco" required />
         </mat-form-field>
-        <mat-form-field appearance="fill" class="grid-item cep">
+        <mat-form-field appearance="outline" class="grid-item cep">
           <mat-label>CEP</mat-label>
-          <input matInput formControlName="cep" required />
+          <input
+            matInput
+            formControlName="cep"
+            mask="00000-000"
+            inputmode="numeric"
+            required
+          />
         </mat-form-field>
-        <mat-form-field appearance="fill" class="grid-item telefone">
+        <mat-form-field appearance="outline" class="grid-item telefone">
           <mat-label>Telefone</mat-label>
-          <input matInput formControlName="telefone" required />
+          <input
+            matInput
+            formControlName="telefone"
+            mask="(00) 00000-0000||(00) 0000-0000"
+            inputmode="tel"
+            required
+          />
         </mat-form-field>
-        <mat-form-field appearance="fill" class="grid-item cnpj">
+        <mat-form-field appearance="outline" class="grid-item cnpj">
           <mat-label>CNPJ</mat-label>
-          <input matInput formControlName="cnpj" required />
+          <input
+            matInput
+            formControlName="cnpj"
+            mask="00.000.000/0000-00"
+            inputmode="numeric"
+            required
+          />
         </mat-form-field>
       </div>
 
       <h3>Cliente</h3>
-      <div class="selecion-row">
-        <ng-select
-          [items]="costumers"
-          bindLabel="cliente"
-          bindValue="id"
-          placeholder="Selecione um cliente"
-          (change)="onSelectCostumer($event)"
-        >
-        </ng-select>
-      </div>
+
+      <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Selecione um cliente</mat-label>
+
+        <mat-select formControlName="clienteId">
+          <mat-option *ngFor="let cliente of costumers" [value]="cliente.id">
+            {{ cliente.cliente }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <!-- Seção: Resumo do Contrato -->
       <h3>Resumo do Contrato</h3>
       <div class="grid-container resumo-contrato">
-        <mat-form-field appearance="fill" class="grid-item resumo-contrato">
+        <mat-form-field appearance="outline" class="grid-item resumo-contrato">
           <mat-label>Escopo do Contrato</mat-label>
           <textarea
             matInput
@@ -52,7 +70,7 @@
           ></textarea>
         </mat-form-field>
         <mat-form-field
-          appearance="fill"
+          appearance="outline"
           class="grid-item resumo-ordem-servico"
         >
           <mat-label>Escopo da Ordem de Serviço</mat-label>
@@ -68,22 +86,22 @@
       <!-- Seção: Detalhes do Contrato -->
       <h3>Detalhes do Contrato</h3>
       <div class="grid-container detalhes-contrato">
-        <mat-form-field appearance="fill" class="grid-item numero-contrato">
+        <mat-form-field appearance="outline" class="grid-item numero-contrato">
           <mat-label>Nº do Contrato</mat-label>
           <input matInput formControlName="numeroContrato" required />
         </mat-form-field>
         <mat-form-field
-          appearance="fill"
+          appearance="outline"
           class="grid-item numero-ordem-servico"
         >
           <mat-label>Nº da Ordem de Serviço</mat-label>
           <input matInput formControlName="numeroOrdemServico" required />
         </mat-form-field>
-        <mat-form-field appearance="fill" class="grid-item numero-servico">
+        <mat-form-field appearance="outline" class="grid-item numero-servico">
           <mat-label>Nº do Serviço</mat-label>
           <input matInput formControlName="numeroServico" required />
         </mat-form-field>
-        <mat-form-field appearance="fill" class="grid-item inicio">
+        <mat-form-field appearance="outline" class="grid-item inicio">
           <mat-label>Início</mat-label>
           <input
             matInput
@@ -97,7 +115,7 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #inicioPicker></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="grid-item termino">
+        <mat-form-field appearance="outline" class="grid-item termino">
           <mat-label>Término</mat-label>
           <input
             matInput
@@ -111,25 +129,34 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #terminoPicker></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="grid-item valor-obra-servico">
+        <mat-form-field
+          appearance="outline"
+          class="grid-item valor-obra-servico"
+        >
           <mat-label>Valor da Obra/Serviço</mat-label>
           <input
             matInput
-            type="number"
             formControlName="valorObraServico"
-            required
+            mask="separator.2"
+            thousandSeparator="."
+            decimalMarker=","
+            prefix="R$ "
+            inputmode="decimal"
           />
         </mat-form-field>
         <mat-form-field
-          appearance="fill"
+          appearance="outline"
           class="grid-item valor-total-contrato"
         >
           <mat-label>Valor Total do Contrato</mat-label>
           <input
             matInput
-            type="number"
             formControlName="valorTotalContrato"
-            required
+            mask="separator.2"
+            thousandSeparator="."
+            decimalMarker=","
+            prefix="R$ "
+            inputmode="decimal"
           />
         </mat-form-field>
       </div>
