@@ -1,21 +1,36 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
+
+  private readySubject = new BehaviorSubject<boolean>(false);
+  readonly ready$ = this.readySubject.asObservable();
 
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  /** Chamar 1x no bootstrap (APP_INITIALIZER) */
+  init(): Promise<void> {
+    // No SSR, não existe localStorage. Marca como pronto e segue.
+    if (!isPlatformBrowser(this.platformId)) {
+      this.readySubject.next(true);
+      return Promise.resolve();
+    }
+
+    // Aqui você pode fazer validações extras se quiser.
+    // Por enquanto: só marca como pronto (token já está no localStorage).
+    this.readySubject.next(true);
+    return Promise.resolve();
+  }
 
   login(credentials: { username: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
@@ -28,11 +43,11 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    if (!isPlatformBrowser(this.platformId)) {
-      return false;
-    }
+    if (!isPlatformBrowser(this.platformId)) return false;
+
     const token = localStorage.getItem('token');
     if (!token) return false;
+
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const exp = payload.exp * 1000;
