@@ -8,14 +8,14 @@
   padding: 20px;
   max-width: 100%;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: var(--surface-bg);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
   font-size: 1.8rem;
-  color: #333;
+  color: var(--text-main);
   margin-bottom: 20px;
   text-align: center;
 }
@@ -37,23 +37,24 @@ h2 {
 
   label {
     font-size: 0.90rem;
-    color: #555;
+    color: var(--text-muted);
     margin: 15px 0 5px 0;
     font-weight: 600;
   }
 
   input::placeholder {
     font-size: 0.75rem;
-    color: #999;
+    color: var(--text-soft);
   }
 
   input {
     margin-top: 10px;
     padding: 8px;
     font-size: 1rem;
-    border: 1px solid #c9c9c9;
+    border: 1px solid var(--border-strong);
     border-radius: 4px;
-    background-color: #fff;
+    background-color: var(--surface-bg);
+    color: var(--text-main);
     width: 100%; /* Garante que todos os inputs tenham 100% da célula */
     box-sizing: border-box;
   }
@@ -78,7 +79,7 @@ h2 {
     padding: 10px 25px;
     font-size: 1.1rem;
     color: #fff;
-    background-color: #28a745;
+    background-color: var(--success-text);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -86,11 +87,11 @@ h2 {
     width: 100%; /* Ocupa toda a célula da grade */
 
     &:hover {
-      background-color: #218838;
+      background-color: var(--success-border);
     }
 
     &:disabled {
-      background-color: #6c757d;
+      background-color: var(--text-muted);
       cursor: not-allowed;
     }
   }

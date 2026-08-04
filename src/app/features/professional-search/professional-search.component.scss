@@ -5,14 +5,14 @@
 .professional-search {
   padding: 20px;
   // margin: 0 auto;
-  background-color: #ffffff;
+  background-color: var(--surface-bg);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
   font-size: 1.8rem;
-  color: #333;
+  color: var(--text-main);
   margin-bottom: 20px;
   text-align: center;
 }
@@ -35,11 +35,11 @@ h2 {
 }
 
 .selection-row.even-row {
-  background-color: #ffffff;
+  background-color: var(--surface-bg);
 }
 
 .selection-row.odd-row {
-  background-color: #f9f9f9;
+  background-color: var(--surface-muted);
 }
 
 .grid-container {
@@ -79,7 +79,7 @@ h2 {
 
 .form-group label {
   font-size: 0.90rem;
-  color: #555;
+  color: var(--text-muted);
   margin-bottom: 5px;
   font-weight: 600;
 }
@@ -87,16 +87,17 @@ h2 {
 .form-group input::placeholder,
 ::ng-deep .ng-select .ng-select-container .ng-placeholder {
   font-size: 0.75rem;
-  color: #999;
+  color: var(--text-soft);
 }
 
 .form-group select,
 .form-group input {
   padding: 8px;
   font-size: 1rem;
-  border: 1px solid #c9c9c9;
+  border: 1px solid var(--border-strong);
   border-radius: 4px;
-  background-color: hsl(0, 0%, 100%);
+  background-color: var(--surface-bg);
+  color: var(--text-main);
   width: 100%;
   box-sizing: border-box;
 }
@@ -108,10 +109,10 @@ h2 {
 .form-group.code-display span {
   font-size: 1rem;
   font-weight: 600;
-  color: #007bff;
+  color: var(--primary-color);
   padding: 8px;
-  background-color: #e9f7fe;
-  border: 1px solid #a8d7f7;
+  background-color: var(--primary-soft);
+  border: 1px solid var(--focus-color);
   border-radius: 4px;
   width: 100%;
   box-sizing: border-box;
@@ -162,7 +163,7 @@ h2 {
   padding: 12px 25px;
   font-size: 1.1rem;
   color: #fff;
-  background-color: #28a745;
+  background-color: var(--success-text);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -182,7 +183,7 @@ h2 {
 }
 
 .add-professional-btn:hover {
-  background-color: #218838;
+  background-color: var(--success-border);
 }
 
 .button-container {

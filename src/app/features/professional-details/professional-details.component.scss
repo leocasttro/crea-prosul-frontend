@@ -5,7 +5,7 @@
 .professional-details {
   padding: 20px;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: var(--surface-bg);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
@@ -31,7 +31,7 @@
   width: 200px; /* Tamanho maior para a foto */
   height: 200px; /* Tamanho maior para a foto */
   border-radius: 50%; /* Torna circular */
-  border: 5px solid #007bff; /* Bordas grossas e coloridas */
+  border: 5px solid var(--primary-color); /* Bordas grossas e coloridas */
   overflow: hidden; /* Garante que a imagem não ultrapasse as bordas */
   display: flex;
   align-items: center;
@@ -66,7 +66,7 @@
 
   label {
     font-size: 0.9rem;
-    color: #555;
+    color: var(--text-muted);
     font-weight: 600;
     margin-bottom: 5px;
     display: block;
@@ -74,7 +74,7 @@
 
   h5 {
     font-size: 1rem;
-    color: #333;
+    color: var(--text-main);
     margin: 0;
     word-wrap: break-word; /* Quebra texto longo */
   }
@@ -136,15 +136,16 @@
   width: 70%;
   padding: 1rem 1rem 0.5rem 1rem;
   font-size: 1rem;
-  border: 2px solid #ccc;
+  border: 2px solid var(--border-strong);
   border-radius: 12px;
   outline: none;
   transition: border-color 0.3s, box-shadow 0.3s;
-  background: #fff;
+  background: var(--surface-bg);
+  color: var(--text-main);
 }
 
 .input-container input:focus {
-  border-color: #4a90e2;
+  border-color: var(--focus-color);
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
 }
 
@@ -152,10 +153,10 @@
 .input-container input:not(:placeholder-shown) + label {
   top: -0.6rem;
   left: 0.9rem;
-  background-color: #fff;
+  background-color: var(--surface-bg);
   padding: 0 0.4rem;
   font-size: 0.75rem;
-  color: #4a90e2;
+  color: var(--primary-color);
 }
 
 /* ng-select styles to match input */
@@ -166,15 +167,15 @@
 .input-container .ng-select .ng-select-container {
   padding: 1rem 1rem 0.5rem 1rem;
   font-size: 1rem;
-  border: 2px solid #ccc;
+  border: 2px solid var(--border-strong);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface-bg);
   min-height: unset;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .input-container .ng-select.ng-select-focused .ng-select-container {
-  border-color: #4a90e2;
+  border-color: var(--focus-color);
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
 }
 
@@ -184,32 +185,32 @@
   position: absolute;
   top: -0.6rem;
   left: 0.9rem;
-  background-color: #fff;
+  background-color: var(--surface-bg);
   padding: 0 0.4rem;
   font-size: 0.75rem;
-  color: #4a90e2;
+  color: var(--primary-color);
 }
 
 .input-container .ng-select.ng-select-filled + label,
 .input-container .ng-select.ng-select-focused + label {
   top: -0.6rem;
   left: 0.9rem;
-  background-color: #fff;
+  background-color: var(--surface-bg);
   padding: 0 0.4rem;
   font-size: 0.75rem;
-  color: #4a90e2;
+  color: var(--primary-color);
 }
 
 /* Ensure dropdown arrow aligns with input style */
 .input-container .ng-select .ng-arrow-wrapper .ng-arrow {
-  border-color: #555 transparent transparent;
+  border-color: var(--text-muted) transparent transparent;
 }
 
 /* Adjust dropdown menu to match input style */
 .ng-dropdown-panel {
-  border: 2px solid #ccc;
+  border: 2px solid var(--border-strong);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface-bg);
 }
 
 .ng-dropdown-panel .ng-option {
@@ -219,6 +220,6 @@
 
 .ng-dropdown-panel .ng-option.ng-option-selected,
 .ng-dropdown-panel .ng-option.ng-option-marked {
-  background-color: rgba(74, 144, 226, 0.1);
-  color: #333;
+  background-color: var(--primary-soft);
+  color: var(--text-main);
 }

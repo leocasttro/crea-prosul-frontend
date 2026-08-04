@@ -1,12 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
+:root {
+  --page-bg: #f8fafc;
+  --surface-bg: #ffffff;
+  --surface-muted: #f7f8fb;
+  --surface-soft: #f4f6fb;
+  --border-color: #e5e7eb;
+  --border-strong: #d9dde7;
+  --text-main: #0f172a;
+  --text-body: #475467;
+  --text-muted: #667085;
+  --text-soft: #98a2b3;
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --primary-soft: #dbeafe;
+  --primary-shadow: rgba(0, 123, 255, 0.22);
+  --focus-color: #93c5fd;
+  --success-bg: #dcfce7;
+  --success-text: #16a34a;
+  --success-border: #86efac;
+  --warning-bg: #ffedd5;
+  --warning-text: #f97316;
+  --icon-sun: #facc15;
+}
+
+body.dark-theme {
+  --page-bg: #0f172a;
+  --surface-bg: #111827;
+  --surface-muted: #182235;
+  --surface-soft: #1f2937;
+  --border-color: #263244;
+  --border-strong: #334155;
+  --text-main: #f8fafc;
+  --text-body: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-soft: #64748b;
+  --primary-color: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-soft: #1e3a5f;
+  --primary-shadow: rgba(59, 130, 246, 0.28);
+  --focus-color: #60a5fa;
+  --success-bg: #123524;
+  --success-text: #4ade80;
+  --success-border: #166534;
+  --warning-bg: #422006;
+  --warning-text: #fb923c;
+}
+
+html,
+body {
+  height: 100%;
+}
 
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: #f0f0f0;
+  background: var(--page-bg);
+  color: var(--text-main);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

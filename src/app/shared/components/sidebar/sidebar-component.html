@@ -12,10 +12,12 @@
       <mat-icon>{{ isCollapsed ? 'menu_open' : 'menu' }}</mat-icon>
     </button>
 
-    <!--  -->
     <div class="logo">
-            <h2>CREA</h2>
-      <img [src]="'/logo.png'" alt="" />
+      <div class="brand-mark">P</div>
+      <div class="brand-copy">
+        <strong>PROSUL</strong>
+        <small>PORTAL CREA</small>
+      </div>
     </div>
     <div class="closed-btn" *ngIf="!isCollapsed" (click)="toggleSidebar()">
       <button class="closed">

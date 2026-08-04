@@ -1,13 +1,33 @@
-<main class="main">
-  <div class="content">
+<main class="app-shell" [class.dark-theme]="isDarkTheme">
+  @if (isAuthenticated && !isLoginRoute) {
+    <app-sidebar
+      [class.collapsed]="isCollapsed"
+      (collapsedChange)="onSidebarToggle($event)"
+    ></app-sidebar>
+  }
+
+  <section class="app-main" [class.collapsed]="isCollapsed">
     @if (isAuthenticated && !isLoginRoute) {
-      <app-sidebar
-        [class.collapsed]="isCollapsed"
-        (collapsedChange)="onSidebarToggle($event)"
-      ></app-sidebar>
+      <header class="top-navbar">
+        <div class="search-box">
+          <mat-icon>search</mat-icon>
+          <input type="text" placeholder="Buscar profissionais, clientes, ARTs..." />
+        </div>
+
+        <div class="navbar-actions">
+          <button type="button" class="icon-btn" (click)="toggleTheme()">
+            <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+          </button>
+
+          <button type="button" class="icon-btn">
+            <mat-icon>notifications</mat-icon>
+          </button>
+        </div>
+      </header>
     }
-    <div class="router-container" [class.collapsed]="isCollapsed">
+
+    <div class="router-container">
       <router-outlet></router-outlet>
     </div>
-  </div>
+  </section>
 </main>

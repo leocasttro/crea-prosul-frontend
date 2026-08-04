@@ -1,25 +1,174 @@
-<div class="table-container">
-  <h2>Dados de Equipe Técnica</h2>
-  <table class="professional-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Especialidade</th>
-        <th>Número de Registro</th>
-        <th>E-mail</th>
-        <th>Telefone</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let professional of professionals" clickable (click)="getProfessional(professional.id)">
-        <td>{{ professional.id || '-' }}</td>
-        <td>{{ professional.name }}</td>
-        <td>{{ professional.formation.nome }}</td>
-        <td>{{ professional.registrationNumber }}</td>
-        <td>{{ professional.contactEmail }}</td>
-        <td>{{ professional.phoneNumber || '-' }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<section class="home-page">
+  <div class="page-header">
+    <div>
+      <h1>Equipe Técnica</h1>
+      <p>Profissionais habilitados, registros CREA e responsáveis técnicos ativos.</p>
+    </div>
+
+    <button type="button" class="primary-action" (click)="goToProfessionalRegister()">
+      <mat-icon>add</mat-icon>
+      <span>Novo profissional</span>
+    </button>
+  </div>
+
+  <div class="summary-grid">
+    <article class="summary-card">
+      <div>
+        <span>Profissionais</span>
+        <strong>{{ professionals.length }}</strong>
+        <small>Cadastrados no sistema</small>
+      </div>
+      <div class="card-icon users">
+        <mat-icon>groups</mat-icon>
+      </div>
+    </article>
+
+    <article class="summary-card">
+      <div>
+        <span>Registros CREA</span>
+        <strong>{{ registrationCount }}</strong>
+        <small>Registros vinculados</small>
+      </div>
+      <div class="card-icon records">
+        <mat-icon>badge</mat-icon>
+      </div>
+    </article>
+
+    <article class="summary-card">
+      <div>
+        <span>Especialidades</span>
+        <strong>{{ specialtyCount }}</strong>
+        <small>Áreas técnicas registradas</small>
+      </div>
+      <div class="card-icon approved">
+        <mat-icon>verified</mat-icon>
+      </div>
+    </article>
+
+    <article class="summary-card">
+      <div>
+        <span>Status</span>
+        <strong>Ativo</strong>
+        <small>Equipe disponível</small>
+      </div>
+      <div class="card-icon time">
+        <mat-icon>schedule</mat-icon>
+      </div>
+    </article>
+  </div>
+
+  <section class="table-card">
+    <div class="table-toolbar">
+      <label class="table-search">
+        <mat-icon>search</mat-icon>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Buscar por nome, registro ou especialidade..."
+        />
+      </label>
+
+      <span>{{ filteredProfessionals.length }} de {{ professionals.length }} registros</span>
+    </div>
+
+    <div class="table-scroll">
+      <table class="professional-table">
+        <thead>
+          <tr>
+            <th>Profissional</th>
+            <th>Especialidade</th>
+            <th>Registro</th>
+            <th>Contato</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let professional of filteredProfessionals" (click)="getProfessional(professional.id)">
+            <td>
+              <div class="professional-cell">
+                <div class="avatar">{{ professional.name.slice(0, 2).toUpperCase() }}</div>
+                <div>
+                  <strong>{{ professional.name }}</strong>
+                  <small>ID #{{ professional.id || '-' }}</small>
+                </div>
+              </div>
+            </td>
+            <td>{{ professional.formation.nome }}</td>
+            <td>{{ professional.registrationNumber }}</td>
+            <td>
+              <div class="contact-cell">
+                <span>
+                  <mat-icon>mail</mat-icon>
+                  {{ professional.contactEmail || '-' }}
+                </span>
+                <span>
+                  <mat-icon>phone</mat-icon>
+                  {{ professional.phoneNumber || '-' }}
+                </span>
+              </div>
+            </td>
+            <td>
+              <span class="status-pill">Ativo</span>
+            </td>
+          </tr>
+
+          <tr *ngIf="filteredProfessionals.length === 0">
+            <td colspan="5" class="empty-state">
+              Nenhum profissional encontrado.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="bottom-grid">
+    <section class="recent-arts-card">
+      <div class="section-header">
+        <h2>ARTs recentes</h2>
+        <button type="button" class="link-action" (click)="navigateTo('/professional-search')">
+          <span>Solicitar ART</span>
+          <mat-icon>north_east</mat-icon>
+        </button>
+      </div>
+
+      <div class="art-list">
+        <article class="art-item" *ngFor="let art of recentArts">
+          <div class="art-content">
+            <div class="art-meta">
+              <span>{{ art.code }}</span>
+              <small [class]="art.statusType">{{ art.status }}</small>
+            </div>
+            <h3>{{ art.title }}</h3>
+            <p>{{ art.description }}</p>
+          </div>
+
+          <button type="button" class="details-btn">
+            Detalhes
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <section class="quick-actions-card">
+      <div class="section-header">
+        <h2>Ações rápidas</h2>
+      </div>
+
+      <div class="quick-action-list">
+        <button
+          type="button"
+          class="quick-action"
+          *ngFor="let action of quickActions"
+          (click)="navigateTo(action.path)"
+        >
+          <span>
+            <strong>{{ action.title }}</strong>
+            <small>{{ action.description }}</small>
+          </span>
+          <mat-icon>north_east</mat-icon>
+        </button>
+      </div>
+    </section>
+  </div>
+</section>
