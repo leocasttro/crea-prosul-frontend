@@ -5,11 +5,13 @@ import { ProfessionalService } from "../../core/services/professional.service";
 import { Professional } from "../../core/models/professional.model";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { ToastrService } from "ngx-toastr";
+import {MatIconModule} from '@angular/material/icon';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-professional-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgSelectModule],
+  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, MatIconModule],
   templateUrl: './professional-register.component.html',
   styleUrls: ['./professional-register.component.scss']
 })
@@ -17,7 +19,13 @@ export class ProfessionalRegisterComponent implements OnInit {
   professionalForm!: FormGroup;
   formations: { id: number; nome: string }[] = [];
 
-  constructor(private fb: FormBuilder, private professionalService: ProfessionalService, private toastr: ToastrService) {}
+  constructor(
+    private fb: FormBuilder,
+    private professionalService:
+    ProfessionalService,
+    private toastr: ToastrService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.professionalForm = this.fb.group({
@@ -56,5 +64,9 @@ getFormation() {
         },
       });
     }
+  }
+
+  cancel(): void {
+    this.router.navigate(['/home']);
   }
 }
