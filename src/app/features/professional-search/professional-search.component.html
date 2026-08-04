@@ -1,55 +1,290 @@
-<div class="search-container">
-  <div class="professional-search">
-    <h2>Solicitar ART</h2>
+<section class="art-page">
+  <header class="page-header">
+    <div>
+      <h1>Solicitar ART</h1>
+      <p>Anotação de Responsabilidade Técnica — preencha as etapas e envie para análise.</p>
+    </div>
 
-    <div class="selection-container">
+    <span class="draft-pill">Rascunho</span>
+  </header>
+
+  <nav class="stepper">
+    <button
+      type="button"
+      class="step"
+      *ngFor="let step of steps"
+      [class.active]="step.number === currentStep"
+      [class.done]="step.number < currentStep"
+      [disabled]="step.number > furthestStep"
+      (click)="goToStep(step.number)"
+    >
+      <span>{{ step.number }}</span>
+      <div>
+        <strong>{{ step.title }}</strong>
+        <small>{{ step.subtitle }}</small>
+      </div>
+    </button>
+  </nav>
+
+  <div class="art-layout">
+    <section class="art-card" *ngIf="currentStep === 1">
+      <section class="form-section">
+        <div class="section-title">
+          <h2>Dados do contratante</h2>
+          <p>Empresa responsável pelo contrato</p>
+        </div>
+
+        <div class="form-grid">
+          <label class="form-group full">
+            <span>Nome da empresa <strong>*</strong></span>
+            <input
+              type="text"
+              [(ngModel)]="artData.nomeEmpresa"
+              placeholder="Razão social"
+            />
+          </label>
+
+          <label class="form-group">
+            <span>CNPJ <strong>*</strong></span>
+            <input
+              type="text"
+              inputmode="numeric"
+              maxlength="18"
+              [(ngModel)]="artData.cnpj"
+              (ngModelChange)="onCnpjChange($event)"
+              placeholder="00.000.000/0000-00"
+            />
+          </label>
+
+          <label class="form-group">
+            <span>Telefone <strong>*</strong></span>
+            <input
+              type="text"
+              inputmode="numeric"
+              maxlength="15"
+              [(ngModel)]="artData.telefone"
+              (ngModelChange)="onTelefoneChange($event)"
+              placeholder="(00) 00000-0000"
+            />
+          </label>
+
+          <label class="form-group">
+            <span>CEP <strong>*</strong></span>
+            <input
+              type="text"
+              inputmode="numeric"
+              maxlength="9"
+              [(ngModel)]="artData.cep"
+              (ngModelChange)="onCepChange($event)"
+              placeholder="00000-000"
+            />
+          </label>
+
+          <label class="form-group">
+            <span>Endereço <strong>*</strong></span>
+            <input
+              type="text"
+              [(ngModel)]="artData.endereco"
+              placeholder="Rua, número, cidade/UF"
+            />
+          </label>
+
+          <label class="form-group full">
+            <span>Cliente <strong>*</strong></span>
+            <ng-select
+              [items]="costumers"
+              bindLabel="cliente"
+              bindValue="id"
+              [(ngModel)]="artData.clienteId"
+              placeholder="Selecione um cliente"
+              (ngModelChange)="onCostumerChange($event)"
+            ></ng-select>
+          </label>
+
+          <label class="form-group full">
+            <span>Coordenador do projeto <strong>*</strong></span>
+            <ng-select
+              [items]="professionals"
+              bindLabel="name"
+              [(ngModel)]="artData.coordenadorProjeto"
+              placeholder="Selecione o coordenador do projeto"
+            ></ng-select>
+          </label>
+        </div>
+      </section>
+
+      <div class="footer-actions">
+        <button type="button" class="ghost-btn" disabled>
+          Voltar
+        </button>
+
+        <button type="button" class="primary-btn" (click)="nextStep()">
+          <span>Continuar</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="art-card" *ngIf="currentStep === 2">
+      <section class="form-section">
+        <div class="section-title">
+          <h2>Dados do contrato</h2>
+          <p>Resumo e números do contrato</p>
+        </div>
+
+        <div class="form-grid">
+          <label class="form-group">
+            <span>Escopo do contrato <strong>*</strong></span>
+            <textarea
+              [(ngModel)]="artData.resumoContrato"
+              placeholder="Descreva o escopo do contrato..."
+            ></textarea>
+          </label>
+
+          <label class="form-group">
+            <span>Escopo da ordem de serviço <strong>*</strong></span>
+            <textarea
+              [(ngModel)]="artData.resumoOrdemServico"
+              placeholder="Descreva o escopo da OS..."
+            ></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="section-title">
+          <h2>Detalhes</h2>
+        </div>
+
+        <div class="form-grid three-columns">
+          <label class="form-group">
+            <span>Nº do contrato <strong>*</strong></span>
+            <input
+              type="text"
+              [(ngModel)]="artData.numeroContrato"
+              placeholder="0000"
+            />
+          </label>
+
+          <label class="form-group">
+            <span>Nº da ordem de serviço <strong>*</strong></span>
+            <input
+              type="text"
+              [(ngModel)]="artData.numeroOrdemServico"
+              placeholder="0000"
+            />
+          </label>
+
+          <label class="form-group">
+            <span>Nº do serviço <strong>*</strong></span>
+            <input
+              type="text"
+              [(ngModel)]="artData.numeroServico"
+              placeholder="0000"
+            />
+          </label>
+
+          <label class="form-group">
+            <span>Início <strong>*</strong></span>
+            <input type="date" [(ngModel)]="artData.inicio" />
+          </label>
+
+          <label class="form-group">
+            <span>Término <strong>*</strong></span>
+            <input type="date" [(ngModel)]="artData.termino" />
+          </label>
+
+          <label class="form-group">
+            <span>Valor da obra/serviço</span>
+            <input
+              type="number"
+              [(ngModel)]="artData.valorObraServico"
+              placeholder="R$ 0,00"
+            />
+          </label>
+
+          <label class="form-group">
+            <span>Valor total do contrato</span>
+            <input
+              type="number"
+              [(ngModel)]="artData.valorTotalContrato"
+              placeholder="R$ 0,00"
+            />
+          </label>
+        </div>
+      </section>
+
+      <div class="footer-actions">
+        <button type="button" class="ghost-btn" (click)="previousStep()">
+          Voltar
+        </button>
+
+        <button type="button" class="primary-btn" (click)="nextStep()">
+          <span>Continuar</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="art-card" *ngIf="currentStep === 3">
       <div
         *ngFor="
           let selection of selectedProfessionals;
           let i = index;
-          let last = last;
+          let isLastProfessional = last;
           trackBy: trackByIndex
         "
         class="selection-row"
-        [class.even-row]="i % 2 === 0"
-        [class.odd-row]="i % 2 !== 0"
       >
+        <div class="selection-header">
+          <div>
+            <h2>Profissional {{ i + 1 }}</h2>
+            <p>Serviço técnico e atividades vinculadas</p>
+          </div>
+
+          <button
+            type="button"
+            class="icon-action danger"
+            *ngIf="selectedProfessionals.length > 1"
+            (click)="removeSelection(i)"
+            title="Remover profissional"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
         <div class="grid-container">
-          <!-- Linha 1: Seleção de Profissional -->
           <div class="grid-row professional-row">
             <div class="form-group grid-item professional">
-              <label for="professional-{{ i }}">Profissional {{ i + 1 }}</label>
+              <label for="professional-{{ i }}">Profissional <strong>*</strong></label>
               <ng-select
                 [items]="professionals"
                 bindLabel="name"
                 [(ngModel)]="selection.professional"
-                placeholder="Selecione um profissional"
+                placeholder="Selecione o responsável técnico"
                 (ngModelChange)="onProfessionalChange(selection)"
               ></ng-select>
             </div>
           </div>
 
-          <!-- Iterar sobre os serviços -->
           <div
             *ngFor="
               let service of selection.services;
               let j = index;
-              let last = last
+              let isLastService = last
             "
-            class="grid-container"
+            class="service-block"
           >
             <div
               class="grid-row service-activity-row"
               *ngIf="selection.professional"
             >
               <div class="form-group grid-item service">
-                <label>Serviço Técnico</label>
+                <label>Serviço técnico <strong>*</strong></label>
                 <ng-select
                   [items]="selection.technicalServices"
                   bindLabel="nomeServicoTecnico"
                   bindValue="codigoServicoTecnico"
                   [(ngModel)]="service.service"
-                  placeholder="Selecione um serviço técnico"
+                  placeholder="Selecione o serviço"
                   (change)="onServiceChange(service, selection)"
                   [matTooltip]="getServiceNameForTooltip(service, selection)"
                   matTooltipPosition="above"
@@ -60,7 +295,7 @@
                 class="form-group code-display grid-item service-code"
                 *ngIf="service.service"
               >
-                <label>Código do Serviço Técnico</label>
+                <label>Código do serviço técnico</label>
                 <span>{{ service.service }}</span>
               </div>
 
@@ -68,14 +303,14 @@
                 class="form-group grid-item activities"
                 *ngIf="service.service"
               >
-                <label>Atividades</label>
+                <label>Atividades <strong>*</strong></label>
                 <ng-select
                   [items]="service.activities"
                   bindLabel="name"
                   bindValue="id"
                   [multiple]="true"
                   [(ngModel)]="service.activityIds"
-                  placeholder="Selecione atividades"
+                  placeholder="Selecione a atividade"
                 ></ng-select>
               </div>
 
@@ -83,18 +318,17 @@
                 class="form-group code-display grid-item activity-codes"
                 *ngIf="service.activityIds?.length"
               >
-                <label>Códigos das Atividades</label>
+                <label>Códigos das atividades</label>
                 <span>{{ getActivityCodes(service) }}</span>
               </div>
             </div>
 
-            <!-- Linha 3: Quantidade, Unidade, Botões -->
             <div
               class="grid-row quantity-unit-row"
               *ngIf="service.activityIds?.length"
             >
               <div class="form-group grid-item quantity">
-                <label>Quantidade</label>
+                <label>Quantidade <strong>*</strong></label>
                 <input
                   type="number"
                   [(ngModel)]="service.quantity"
@@ -104,7 +338,7 @@
               </div>
 
               <div class="form-group grid-item unit">
-                <label>Unidade de Medida</label>
+                <label>Unidade de medida <strong>*</strong></label>
                 <ng-select
                   [items]="units"
                   bindLabel="descricao"
@@ -117,48 +351,93 @@
 
               <div class="grid-item btn-group">
                 <button
-                  class="add-btn"
+                  type="button"
+                  class="outline-btn"
                   (click)="addService(selection)"
                   title="Adicionar serviço"
-                  *ngIf="last"
+                  *ngIf="isLastService"
                 >
-                  Adicionar Serviço
+                  <mat-icon>add</mat-icon>
+                  <span>Adicionar serviço</span>
                 </button>
 
                 <button
-                  class="remove-btn"
+                  type="button"
+                  class="icon-action danger"
                   (click)="removeService(selection, j)"
                   title="Remover serviço"
                   *ngIf="selection.services.length > 1"
                 >
-                  Remover
+                  <mat-icon>delete</mat-icon>
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Botão para adicionar novo profissional -->
-        <div class="button-container" *ngIf="last">
+        <div class="add-professional-row" *ngIf="isLastProfessional">
           <button
-            class="add-professional-btn"
+            type="button"
+            class="dashed-btn"
             (click)="addProfessionalSelection()"
           >
-            Adicionar Profissional
-          </button>
-          <button
-            class="remove-professional-btn"
-            (click)="removeProfessionalSelection()"
-          >
-            Remover Profissional
+            <mat-icon>add</mat-icon>
+            <span>Adicionar profissional</span>
           </button>
         </div>
       </div>
-      <div class="button-export-container">
-        <button class="add-professional-btn" (click)="exportToExcel()">
-          Solicitar ART
+
+      <div class="footer-actions">
+        <button type="button" class="ghost-btn" (click)="previousStep()">
+          Voltar
+        </button>
+
+        <button type="button" class="primary-btn" (click)="exportToExcel()">
+          <mat-icon>send</mat-icon>
+          <span>Solicitar ART</span>
         </button>
       </div>
-    </div>
+    </section>
+
+    <aside class="summary-card">
+      <h2>Resumo da solicitação</h2>
+
+      <dl>
+        <div>
+          <dt>Contratante</dt>
+          <dd>{{ artData.nomeEmpresa || '—' }}</dd>
+        </div>
+
+        <div>
+          <dt>Cliente</dt>
+          <dd>{{ selectedCostumerName || '—' }}</dd>
+        </div>
+
+        <div>
+          <dt>Coordenador</dt>
+          <dd>{{ selectedCoordinatorName || '—' }}</dd>
+        </div>
+
+        <div>
+          <dt>Nº do contrato</dt>
+          <dd>{{ artData.numeroContrato || '—' }}</dd>
+        </div>
+
+        <div>
+          <dt>Profissionais</dt>
+          <dd>{{ professionalCount }}</dd>
+        </div>
+
+        <div>
+          <dt>Serviços</dt>
+          <dd>{{ serviceCount }}</dd>
+        </div>
+      </dl>
+
+      <p class="summary-note">
+        A ART só é enviada ao conselho após a validação dos códigos de atividade
+        e do registro ativo de cada profissional.
+      </p>
+    </aside>
   </div>
-</div>
+</section>

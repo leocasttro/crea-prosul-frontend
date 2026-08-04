@@ -122,6 +122,22 @@
   box-shadow: none;
 }
 
+::ng-deep .form-field .ng-select.ng-select-opened .ng-select-container {
+  border-color: var(--focus-color);
+  background: var(--surface-bg);
+}
+
+::ng-deep .form-field .ng-select .ng-placeholder,
+::ng-deep .form-field .ng-select .ng-value,
+::ng-deep .form-field .ng-select .ng-input input {
+  color: var(--text-main);
+}
+
+::ng-deep .form-field .ng-select .ng-arrow-wrapper,
+::ng-deep .form-field .ng-select .ng-clear-wrapper {
+  color: var(--text-muted);
+}
+
 .form-actions {
   display: flex;
   align-items: center;

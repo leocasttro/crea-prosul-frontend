@@ -1,4 +1,4 @@
-<main class="app-shell" [class.dark-theme]="isDarkTheme">
+<main class="app-shell" [class.dark-theme]="isDarkTheme" [class.login-shell]="isLoginRoute">
   @if (isAuthenticated && !isLoginRoute) {
     <app-sidebar
       [class.collapsed]="isCollapsed"
@@ -6,7 +6,7 @@
     ></app-sidebar>
   }
 
-  <section class="app-main" [class.collapsed]="isCollapsed">
+  <section class="app-main" [class.collapsed]="isCollapsed" [class.login-main]="isLoginRoute">
     @if (isAuthenticated && !isLoginRoute) {
       <header class="top-navbar">
         <div class="search-box">

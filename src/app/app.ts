@@ -32,13 +32,13 @@ export class App {
       this.isDarkTheme = localStorage.getItem('prosul-theme') === 'dark';
       this.applyBodyTheme();
       this.isAuthenticated = this.authService.isAuthenticated();
-      this.isLoginRoute = this.router.url === '/login';
+      this.isLoginRoute = this.isCurrentLoginRoute();
 
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)
       ).subscribe((event: NavigationEnd) => {
         this.isAuthenticated = this.authService.isAuthenticated();
-        this.isLoginRoute = this.router.url === '/login';
+        this.isLoginRoute = this.isCurrentLoginRoute();
       })
     } else {
       console.log('SSR: inicialidado APP sem verificaçção de autenticação')
@@ -56,5 +56,9 @@ export class App {
 
   private applyBodyTheme(): void {
     document.body.classList.toggle('dark-theme', this.isDarkTheme);
+  }
+
+  private isCurrentLoginRoute(): boolean {
+    return this.router.url.split('?')[0] === '/login';
   }
 }

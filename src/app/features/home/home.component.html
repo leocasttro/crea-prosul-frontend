@@ -123,33 +123,6 @@
   </section>
 
   <div class="bottom-grid">
-    <section class="recent-arts-card">
-      <div class="section-header">
-        <h2>ARTs recentes</h2>
-        <button type="button" class="link-action" (click)="navigateTo('/professional-search')">
-          <span>Solicitar ART</span>
-          <mat-icon>north_east</mat-icon>
-        </button>
-      </div>
-
-      <div class="art-list">
-        <article class="art-item" *ngFor="let art of recentArts">
-          <div class="art-content">
-            <div class="art-meta">
-              <span>{{ art.code }}</span>
-              <small [class]="art.statusType">{{ art.status }}</small>
-            </div>
-            <h3>{{ art.title }}</h3>
-            <p>{{ art.description }}</p>
-          </div>
-
-          <button type="button" class="details-btn">
-            Detalhes
-          </button>
-        </article>
-      </div>
-    </section>
-
     <section class="quick-actions-card">
       <div class="section-header">
         <h2>Ações rápidas</h2>

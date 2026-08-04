@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CostumerService } from '../../core/services/costumer.service';
 import { Costumer } from '../../core/models/costumer.model';
 import { ToastrService } from "ngx-toastr";
+import {MatIconModule} from '@angular/material/icon';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-costumer-register',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './costumer-register.component.html',
   styleUrls: ['./costumer-register.component.scss'],
 })
@@ -17,7 +19,8 @@ export class CostumerRegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private costumerService: CostumerService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -49,5 +52,9 @@ export class CostumerRegisterComponent implements OnInit {
         },
       });
     }
+  }
+
+  cancel(): void {
+    this.router.navigate(['/home']);
   }
 }

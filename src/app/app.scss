@@ -68,6 +68,10 @@ app-sidebar.collapsed {
   margin-left: 80px;
 }
 
+.app-main.login-main {
+  margin-left: 0;
+}
+
 .top-navbar {
   height: 72px;
   position: sticky;
@@ -157,10 +161,19 @@ app-sidebar.collapsed {
   padding: 32px;
 }
 
+.login-shell .router-container {
+  min-height: 100vh;
+  padding: 0;
+}
+
 @media (max-width: 900px) {
   .app-main,
   .app-main.collapsed {
     margin-left: 80px;
+  }
+
+  .app-main.login-main {
+    margin-left: 0;
   }
 
   .top-navbar {

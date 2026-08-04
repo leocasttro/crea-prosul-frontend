@@ -1,45 +1,100 @@
-<div class="body-container">
-  <div class="login-container">
-    <div class="login-header">
-      <img src="/logo.png" alt="Logo Prosul" class="logo-prosul">
-      <h2>CREA</h2>
+<section class="login-page">
+  <aside class="login-panel">
+    <div class="brand-block">
+      <div class="brand-mark">P</div>
+      <div>
+        <strong>PROSUL</strong>
+        <span>Portal CREA</span>
+      </div>
     </div>
-    <form (ngSubmit)="login()" #loginForm="ngForm">
-      <div>
-        <label for="username">Usuário</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          [(ngModel)]="username"
-          placeholder="Digite seu usuário"
-          required
-          #usernameInput="ngModel"
-        />
-      <div class="error-message" *ngIf="usernameInput.invalid && usernameInput.touched">
-        O usuário é obrigatório
-      </div>
-      </div>
-      <div>
-        <label for="password">Senha</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          [(ngModel)]="password"
-          placeholder="Digite sua senha"
-          required
-          #passwordInput="ngModel"
-        />
-      <div class="error-message" *ngIf="passwordInput.invalid && passwordInput.touched">
-        A senha é obrigatória
-      </div>
-      </div>
-      <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
-      <div class="error-message" *ngIf="error">
-        {{ error }}
-      </div>
-    </form>
-  </div>
 
-</div>
+    <div class="panel-copy">
+      <span class="eyebrow">Gestão técnica</span>
+      <h1>Acesse o painel de solicitações ART</h1>
+      <p>
+        Organize clientes, profissionais, contratos e exportações em uma
+        experiência mais clara para o fluxo operacional.
+      </p>
+    </div>
+
+    <div class="panel-footer">
+      <div>
+        <mat-icon>verified_user</mat-icon>
+        <span>Ambiente restrito</span>
+      </div>
+      <div>
+        <mat-icon>description</mat-icon>
+        <span>Exportação XLSX</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="login-content">
+    <form class="login-card" (ngSubmit)="login()" #loginForm="ngForm">
+      <div class="card-header">
+        <img src="/logo.png" alt="Logo Prosul" class="logo-prosul" />
+        <span class="card-kicker">Portal administrativo</span>
+        <h2>Entrar no sistema</h2>
+        <p>Informe suas credenciais para continuar.</p>
+      </div>
+
+      <label class="form-group">
+        <span>Usuário</span>
+        <div class="input-shell">
+          <mat-icon>person</mat-icon>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            [(ngModel)]="username"
+            placeholder="Digite seu usuário"
+            autocomplete="username"
+            required
+            #usernameInput="ngModel"
+          />
+        </div>
+        <small class="error-message" *ngIf="usernameInput.invalid && usernameInput.touched">
+          O usuário é obrigatório
+        </small>
+      </label>
+
+      <label class="form-group">
+        <span>Senha</span>
+        <div class="input-shell">
+          <mat-icon>lock</mat-icon>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Digite sua senha"
+            autocomplete="current-password"
+            required
+            #passwordInput="ngModel"
+          />
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
+          >
+            <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
+        <small class="error-message" *ngIf="passwordInput.invalid && passwordInput.touched">
+          A senha é obrigatória
+        </small>
+      </label>
+
+      <div class="submit-error" *ngIf="error">
+        <mat-icon>error</mat-icon>
+        <span>{{ error }}</span>
+      </div>
+
+      <button class="submit-btn" type="submit" [disabled]="loginForm.invalid">
+        <span>Entrar</span>
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </form>
+  </main>
+</section>

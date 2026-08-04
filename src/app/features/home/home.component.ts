@@ -16,29 +16,6 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   professionals: Professional[] = [];
   searchTerm = '';
-  recentArts = [
-    {
-      code: 'ART-2026-0184',
-      status: 'Em análise',
-      statusType: 'analysis',
-      title: 'Muro de Arrimo de Alvenaria',
-      description: 'Prefeitura de Palhoça - Resp. João Silva',
-    },
-    {
-      code: 'ART-2026-0183',
-      status: 'Aprovada',
-      statusType: 'approved',
-      title: 'Laudo Ambiental',
-      description: 'Construtora Sul LTDA - Resp. Raimunda N. Sousa',
-    },
-    {
-      code: 'ART-2026-0181',
-      status: 'Pendente',
-      statusType: 'pending',
-      title: 'Projeto de Irrigação',
-      description: 'Agro Vale S.A. - Resp. Deivid Pires',
-    },
-  ];
   quickActions = [
     {
       title: 'Solicitar nova ART',

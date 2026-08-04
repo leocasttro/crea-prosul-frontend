@@ -1,118 +1,227 @@
-// Manter inalterado
-.register-container {
-  padding: 20px;
-  width: 100%;
-}
-
-.costumer-register {
-  padding: 20px;
-  max-width: 100%;
-  margin: 0 auto;
-  background-color: var(--surface-bg);
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  font-size: 1.8rem;
-  color: var(--text-main);
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.form-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Duas colunas de largura igual */
-  gap: 15px; /* Espaçamento entre os itens */
-  margin-bottom: 20px;
-}
-
-.form-row {
-  display: contents; /* Permite que os filhos herdem o grid pai */
-}
-
-.form-group {
+.register-page {
   display: flex;
   flex-direction: column;
+  gap: 24px;
+}
 
-  label {
-    font-size: 0.90rem;
-    color: var(--text-muted);
-    margin: 15px 0 5px 0;
-    font-weight: 600;
+.page-header {
+  h1 {
+    margin: 0;
+    color: var(--text-main);
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.2;
   }
 
-  input::placeholder {
-    font-size: 0.75rem;
-    color: var(--text-soft);
+  p {
+    margin: 8px 0 0;
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+}
+
+.register-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: start;
+}
+
+.costumer-card,
+.helper-card {
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: var(--surface-bg);
+}
+
+.costumer-card {
+  padding: 32px;
+}
+
+.form-section {
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--border-color);
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.section-title {
+  margin-bottom: 22px;
+
+  h2 {
+    margin: 0;
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &.full {
+    grid-column: 1 / -1;
+  }
+
+  span {
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  strong {
+    color: #e11d48;
   }
 
   input {
-    margin-top: 10px;
-    padding: 8px;
-    font-size: 1rem;
+    height: 44px;
+    padding: 0 14px;
     border: 1px solid var(--border-strong);
-    border-radius: 4px;
-    background-color: var(--surface-bg);
+    border-radius: 14px;
+    outline: none;
+    background: var(--surface-muted);
     color: var(--text-main);
-    width: 100%; /* Garante que todos os inputs tenham 100% da célula */
-    box-sizing: border-box;
+    font-size: 14px;
   }
 
-  input[type="number"] {
-    -moz-appearance: textfield; /* Remove as setas no Firefox */
+  input::placeholder {
+    color: var(--text-muted);
   }
 
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none; /* Remove as setas no Chrome/Safari */
+  input:focus {
+    border-color: var(--focus-color);
+    background: var(--surface-bg);
+  }
+}
+
+.location-grid {
+  grid-template-columns: 160px minmax(0, 1fr);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.primary-btn,
+.ghost-btn {
+  min-height: 44px;
+  border: 0;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  background: var(--primary-color);
+  color: #ffffff;
+  box-shadow: 0 10px 24px var(--primary-shadow);
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+
+  &:hover {
+    background: var(--primary-hover);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.ghost-btn {
+  padding: 0 14px;
+  background: transparent;
+  color: var(--text-main);
+}
+
+.helper-card {
+  padding: 24px;
+
+  h2 {
+    margin: 18px 0 16px;
+    color: var(--text-main);
+    font-size: 17px;
+    font-weight: 800;
+  }
+
+  p {
     margin: 0;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
   }
 }
 
-.button-group {
-  display: flex;
-  align-items: flex-end;
+.helper-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--primary-color);
 
-  button {
-    margin-top: 30px;
-    padding: 10px 25px;
-    font-size: 1.1rem;
-    color: #fff;
-    background-color: var(--success-text);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%; /* Ocupa toda a célula da grade */
-
-    &:hover {
-      background-color: var(--success-border);
-    }
-
-    &:disabled {
-      background-color: var(--text-muted);
-      cursor: not-allowed;
-    }
+  mat-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 22px;
   }
 }
 
-/* Posicionamento explícito para alinhar as colunas corretamente */
-.form-group:nth-child(1) { grid-column: 1; } /* Nome */
-.form-group:nth-child(2) { grid-column: 2; } /* Nº do Registro */
-.form-group:nth-child(3) { grid-column: 1; } /* Formação */
-.form-group:nth-child(4) { grid-column: 2; } /* CPF */
-.form-group:nth-child(5) { grid-column: 1; } /* Telefone */
-.form-group:nth-child(6) { grid-column: 2; } /* Email */
-.form-group:nth-child(7) { grid-column: 1 / span 2; } /* Botão Cadastrar (ocupa as duas colunas) */
-
-/* Removido (não mais necessário)
-.phone-email-row {
-  display: flex;
-  gap: 15px;
+@media (max-width: 1100px) {
+  .register-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
-.phone-email-group {
-  flex: 1;
+@media (max-width: 720px) {
+  .costumer-card {
+    padding: 22px;
+  }
+
+  .form-grid,
+  .location-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .primary-btn,
+  .ghost-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
-*/
